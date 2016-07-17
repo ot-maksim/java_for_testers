@@ -4,28 +4,20 @@ public class MyFirstProgram {
 
   public static void main(String[] args) {
 
-    hello("world");
     hello("Maks");
 
-    double length = 3;
-    System.out.println("Square's square with length " + length + " = " + area(length));
+    Square square = new Square(5);
+    System.out.println("Square's square with length " + square.getLength() +
+            " = " + square.area());
 
-    double a = 5;
-    double b = 3;
-    System.out.println("Rectangle's square with lengths " + a + " and " + b + " = " + area(a,b));
+    Rectangle rectangle = new Rectangle(3,5);
+    System.out.println("Rectangle's square with length " + rectangle.getLength() +
+            " and width " + rectangle.getWidth() + " = " + rectangle.area());
   }
 
   public static void hello(String name) {
     System.out.println("Hello " + name + "!");
 
-  }
-
-  public static double area(double len) {
-    return len * len;
-  }
-
-  public static double area(double a, double b) {
-    return a * b;
   }
 
 
