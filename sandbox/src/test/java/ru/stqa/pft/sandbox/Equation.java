@@ -10,7 +10,7 @@ public class Equation {
   private double b;
   private double c;
 
-  public Equation(double a, double b, double c){
+  public Equation(double a, double b, double c) {
 
     this.a = a;
     this.b = b;
@@ -18,18 +18,29 @@ public class Equation {
 
     double d = b * b - 4 * a * c;
 
-    if(d > 0){
-      n = 2;
-    } else {
-      if(d == 0){
+    if (a == 0) {
+      if (b == 0) {
+        if (c == 0) {
+          n = -1;
+        } else {
+          n = 0;
+        }
+      } else {
         n = 1;
-      } else{
+      }
+
+    } else {
+      if (d > 0) {
+        n = 2;
+      } else if (d == 0) {
+        n = 1;
+      } else {
         n = 0;
       }
     }
   }
 
-  public int getRootNumber(){
+  public int getRootNumber() {
     return n;
   }
 }
