@@ -3,9 +3,11 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.safari.SafariDriver;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -24,12 +26,14 @@ public class ApplicationManager {
   }
 
   public void init() {
-    if (browser == BrowserType.FIREFOX){
+    if (Objects.equals(browser, BrowserType.FIREFOX)){
       wd = new FirefoxDriver();
-    } else if (browser == BrowserType.CHROME) {
+    } else if (Objects.equals(browser, BrowserType.CHROME)) {
       wd = new ChromeDriver();
-    } else if (browser == BrowserType.SAFARI) {
+    } else if (Objects.equals(browser, BrowserType.SAFARI)) {
       wd = new SafariDriver();
+    } else if (Objects.equals(browser, BrowserType.OPERA_BLINK)) {
+      wd = new OperaDriver();
     }
     groupHelper = new GroupHelper(wd);
     contactHelper = new ContactHelper(wd);
