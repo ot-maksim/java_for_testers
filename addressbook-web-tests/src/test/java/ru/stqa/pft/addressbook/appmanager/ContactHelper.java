@@ -64,4 +64,14 @@ public class ContactHelper extends HelperBase {
   public void acceptContactsDeletion() {
     wd.switchTo().alert().accept();
   }
+
+  public boolean isThereAnyContact() {
+      return isElementPresent(By.xpath("//form[2]/table/tbody/tr[2]/td[1]/input"));
+  }
+
+  public void createContact(ContactData contact, boolean isContactCreation) {
+    initContactCreation();
+    fillContactForm(contact, isContactCreation);
+    submitContactCreation();
+  }
 }
