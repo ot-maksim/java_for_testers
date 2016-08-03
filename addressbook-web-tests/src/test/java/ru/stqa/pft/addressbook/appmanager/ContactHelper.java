@@ -2,6 +2,8 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 
 /**
@@ -17,12 +19,22 @@ public class ContactHelper extends HelperBase {
     click(By.xpath("//div[@id='content']/form/input[21]"));
   }
 
-  public void fillContactCreationForm(ContactData contactData) {
+  public void fillContactForm(ContactData contactData, boolean isContactCreation) {
     type(By.name("firstname"), contactData.getFirstName());
     type(By.name("lastname"), contactData.getLastName());
     type(By.name("address"), contactData.getAddress());
     type(By.name("home"), contactData.getHomePhoneNumber());
     type(By.name("email"), contactData.getEmail());
+
+    if (isContactCreation) {
+      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+    } else {
+      Assert.assertFalse(isElementPresent(By.name("new_group")), "group selection element should NOT exist on contact modification form");
+    }
+
+//    if (isElementPresent(By.name("new_group"))) {
+//      new Select(wd.findElement(By.name("new_group"))).selectByValue(contactData.getGroup());
+//    }
   }
 
   public void initContactCreation() {
@@ -37,7 +49,7 @@ public class ContactHelper extends HelperBase {
     click(By.name("update"));
   }
 
-  public void goToHomePage() {
+  public void returnToHomePage() {
     click(By.linkText("home"));
   }
 
