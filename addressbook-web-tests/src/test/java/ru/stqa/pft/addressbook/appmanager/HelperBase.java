@@ -3,7 +3,6 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
  * Created by maksym on 7/25/16.
@@ -15,10 +14,15 @@ public class HelperBase {
     this.wd = wd;
   }
 
-  protected void type(String locator, String text) {
-    click(By.name(locator));
-    wd.findElement(By.name(locator)).clear();
-    wd.findElement(By.name(locator)).sendKeys(text);
+  protected void type(By locator, String text) {
+    click((locator));
+    if (text != null) {
+      String existingText = wd.findElement(locator).getAttribute("value");
+      if (!text.equals(existingText)) {
+        wd.findElement(locator).clear();
+        wd.findElement(locator).sendKeys(text);
+      }
+    }
   }
 
   protected void click(By locator) {

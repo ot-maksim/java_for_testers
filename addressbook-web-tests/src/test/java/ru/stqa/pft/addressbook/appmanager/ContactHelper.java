@@ -18,11 +18,11 @@ public class ContactHelper extends HelperBase {
   }
 
   public void fillContactCreationForm(ContactData contactData) {
-    type("firstname", contactData.getFirstName());
-    type("lastname", contactData.getLastName());
-    type("address", contactData.getAddress());
-    type("home", contactData.getHomePhoneNumber());
-    type("email", contactData.getEmail());
+    type(By.name("firstname"), contactData.getFirstName());
+    type(By.name("lastname"), contactData.getLastName());
+    type(By.name("address"), contactData.getAddress());
+    type(By.name("home"), contactData.getHomePhoneNumber());
+    type(By.name("email"), contactData.getEmail());
   }
 
   public void initContactCreation() {
