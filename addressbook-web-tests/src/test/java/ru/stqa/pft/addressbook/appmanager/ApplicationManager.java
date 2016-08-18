@@ -40,7 +40,7 @@ public class ApplicationManager {
     navigationHelper = new NavigationHelper(wd);
     sessionHelper = new SessionHelper(wd);
     wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-    wd.get("http://localhost/~maksym/addressbook/index.php");
+    wd.get("http://localhost/~maksym/addressbook");
     sessionHelper.login("admin", "secret");
   }
 
