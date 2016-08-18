@@ -30,6 +30,8 @@ public class Collections {
 
     // Collections
 
+    //List
+
 //    List<String> languages = new ArrayList<>();
 //    languages.add("Java");
 //    languages.add("C#");
@@ -60,5 +62,39 @@ public class Collections {
 //    for (Object i : languages) {
 //      System.out.println("I want to learn " + i);
 //    }
+
+      //Map
+    
+//    Map <String, String> pets = new HashMap<>();
+//    pets.put("Tom", "cat");
+//    pets.put("Jerry", "mouse");
+//
+//    for (Map.Entry<String,String> entry : pets.entrySet()){
+//      if (entry.getKey().equals("Tom")){
+//        entry.setValue("Big Cat");
+//      }
+//      if (entry.getKey().equals("Jerry")){
+//        entry.setValue("Small Mouse");
+//      }
+//      System.out.println(entry.getKey() + " is " + entry.getValue());
+//    }
+
+//    pets.forEach((k,v) -> System.out.println(k + " is " + v));
+
+//    Iterator entries = pets.entrySet().iterator();
+//    while (entries.hasNext()){
+//      Map.Entry thisEntry = (Map.Entry) entries.next();
+//      Object key = thisEntry.getKey();
+//      Object value = thisEntry.getValue();
+//      System.out.println(key + " is " + value);
+//    }
+
+//    for (Iterator entries = pets.entrySet().iterator(); entries.hasNext();){
+//      Map.Entry thisEntry = (Map.Entry) entries.next();
+//      Object key = thisEntry.getKey();
+//      Object value = thisEntry.getValue();
+//      System.out.println(key + " is " + value);
+//    }
+
   }
 }
