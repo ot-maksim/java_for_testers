@@ -9,10 +9,7 @@ public class GroupData {
 
 
   public GroupData(String name, String header, String footer) {
-    this(0, name, header, footer);
-//    this.name = name;
-//    this.header = header;
-//    this.footer = footer;
+    this(Integer.MAX_VALUE, name, header, footer);
   }
 
   public GroupData(int id, String name, String header, String footer) {
@@ -49,16 +46,13 @@ public class GroupData {
 
     GroupData groupData = (GroupData) o;
 
-    if (id != groupData.id) return false;
     return name != null ? name.equals(groupData.name) : groupData.name == null;
 
   }
 
   @Override
   public int hashCode() {
-    int result = id;
-    result = 31 * result + (name != null ? name.hashCode() : 0);
-    return result;
+    return name != null ? name.hashCode() : 0;
   }
 
   @Override

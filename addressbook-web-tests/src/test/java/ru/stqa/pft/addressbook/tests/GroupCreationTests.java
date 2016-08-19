@@ -4,7 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.List;
 
 public class GroupCreationTests extends TestBase {
@@ -17,12 +17,15 @@ public class GroupCreationTests extends TestBase {
     app.getGroupHelper().createGroup(group);
     app.getNavigationHelper().goToGroupPage();
     List<GroupData> after = app.getGroupHelper().getGroupList();
+
     Assert.assertEquals(after.size(), before.size() + 1);
 
-    int maxId = after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId();
-
-    group.setId(maxId);
     before.add(group);
-    Assert.assertEquals(new HashSet<>(before), new HashSet<>(after));
+
+    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
+    after.sort(byId);
+    before.sort(byId);
+
+    Assert.assertEquals(before, after);
   }
 }
