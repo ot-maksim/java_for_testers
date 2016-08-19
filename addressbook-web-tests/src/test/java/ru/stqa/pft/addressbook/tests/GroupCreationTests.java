@@ -19,14 +19,45 @@ public class GroupCreationTests extends TestBase {
     List<GroupData> after = app.getGroupHelper().getGroupList();
     Assert.assertEquals(after.size(), before.size() + 1);
 
-    int max = 0;
-    for (GroupData g : after){
-      if (g.getId() > max) {
-        max = g.getId();
-      }
-    }
-    group.setId(max);
+//   Here are several options how to find max id using List
+
+    // option 1 - using loop
+//    int maxId = 0;
+//    for (GroupData g : after) {
+//      if (g.getId() > maxId) {
+//        maxId = g.getId();
+//      }
+//    }
+
+    // option 2 - using anonymous class
+//    Comparator<? super GroupData> byId = new Comparator<GroupData>() {
+//      @Override
+//      public int compare(GroupData o1, GroupData o2) {
+//        return Integer.compare(o1.getId(), o2.getId());
+//      }
+//    };
+//    Collections.sort(after, byId);
+//    int maxId = after.get(after.size() - 1).getId();
+
+    // option 3 - using inner class
+//    class GroupIdCompare implements Comparator<GroupData> {
+//      @Override
+//      public int compare(GroupData o1, GroupData o2) {
+//        return Integer.compare(o1.getId(), o2.getId());
+//      }
+//    }
+//    GroupIdCompare byId = new GroupIdCompare();
+//    Collections.sort(after, byId);
+//    int maxId = after.get(after.size() - 1).getId();
+
+    // option 4 - using lamda/anonymous function - starting from java 8
+//    Comparator<? super GroupData> byId = (Comparator<GroupData>) (o1, o2) -> Integer.compare(o1.getId(), o2.getId());
+//    int maxId = after.stream().max(byId).get().getId();
+//    OR
+    int maxId = after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId();
+
+    group.setId(maxId);
     before.add(group);
-    Assert.assertEquals(new HashSet<>(before),new HashSet<>(after));
+    Assert.assertEquals(new HashSet<>(before), new HashSet<>(after));
   }
 }
