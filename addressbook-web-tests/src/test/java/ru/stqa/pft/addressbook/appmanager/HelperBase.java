@@ -12,12 +12,16 @@ public class HelperBase {
   private WebDriver wd;
   private ApplicationManager applicationManager;
 
-  public HelperBase(WebDriver wd, ApplicationManager applicationManager) {
+  protected HelperBase(WebDriver wd, ApplicationManager applicationManager) {
     this.wd = wd;
     this.applicationManager = applicationManager;
   }
 
-  public WebDriver getWd() {
+  protected ApplicationManager getApplicationManager() {
+    return applicationManager;
+  }
+
+  protected WebDriver getWd() {
     return wd;
   }
 

@@ -1,10 +1,16 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.GroupData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by maksym on 7/25/16.
@@ -27,7 +33,15 @@ public class ContactHelper extends HelperBase {
     type(By.name("email"), contactData.getEmail());
 
     if (isContactCreation) {
-      new Select(getWd().findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+      try {
+        new Select(getWd().findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+      } catch (NoSuchElementException ex) {
+        getApplicationManager().getNavigationHelper().goToGroupPage();
+        GroupData group = new GroupData(contactData.getGroup(), null, null);
+        getApplicationManager().getGroupHelper().createGroup(group);
+        initContactCreation();
+        new Select(getWd().findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+      }
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")), "group selection element should NOT exist on contact modification form");
     }
@@ -50,7 +64,17 @@ public class ContactHelper extends HelperBase {
   }
 
   public void returnToHomePage() {
-    click(By.linkText("home"));
+    int elements = getWd().findElements(By.xpath(".//*[@id='content']/div/i/a")).size();
+
+    if (elements == 1) {
+      click(By.xpath(".//*[@id='content']/div/i/a[1]"));
+    } else if (elements == 2) {
+      click(By.xpath(".//*[@id='content']/div/i/a[2]"));
+    }
+  }
+
+  public void addNextGroup() {
+    click(By.xpath(".//*[@id='content']/div/i/a[1]"));
   }
 
   public void selectContact() {
@@ -73,5 +97,17 @@ public class ContactHelper extends HelperBase {
     initContactCreation();
     fillContactForm(contact, true);
     submitContactCreation();
+  }
+
+  public List<ContactData> getContactList() {
+    List<ContactData> contacts = new ArrayList<>();
+    int elements = getWd().findElements(By.xpath(".//*[@id='maintable']/tbody/tr")).size();
+    for (int i = 2; i <= elements; i++) {
+      String lastName = getWd().findElement(By.xpath(".//*[@id='maintable']/tbody/tr[" + i + "]/td[2]")).getText();
+      String firstName = getWd().findElement(By.xpath(".//*[@id='maintable']/tbody/tr[" + i + "]/td[3]")).getText();
+      ContactData contact = new ContactData(firstName, lastName, null, null, null, null);
+      contacts.add(contact);
+    }
+    return contacts;
   }
 }

@@ -18,7 +18,8 @@ public class GroupHelper extends HelperBase {
   }
 
   public void returnToGroupPage() {
-    click(By.linkText("group page"));
+//    click(By.linkText("group page"));
+    click(By.xpath(".//*[@id='content']/div/i/a"));
   }
 
   public void submitGroupCreation() {
