@@ -9,30 +9,36 @@ import org.openqa.selenium.WebDriver;
  * Created by maksym on 7/25/16.
  */
 public class HelperBase {
-  protected WebDriver wd;
+  private WebDriver wd;
+  private ApplicationManager applicationManager;
 
-  public HelperBase(WebDriver wd) {
+  public HelperBase(WebDriver wd, ApplicationManager applicationManager) {
     this.wd = wd;
+    this.applicationManager = applicationManager;
+  }
+
+  public WebDriver getWd() {
+    return wd;
   }
 
   protected void type(By locator, String text) {
     click((locator));
     if (text != null) {
-      String existingText = wd.findElement(locator).getAttribute("value");
+      String existingText = getWd().findElement(locator).getAttribute("value");
       if (!text.equals(existingText)) {
-        wd.findElement(locator).clear();
-        wd.findElement(locator).sendKeys(text);
+        getWd().findElement(locator).clear();
+        getWd().findElement(locator).sendKeys(text);
       }
     }
   }
 
   protected void click(By locator) {
-    wd.findElement(locator).click();
+    getWd().findElement(locator).click();
   }
 
   protected boolean isAlertPresent() {
     try {
-      wd.switchTo().alert();
+      getWd().switchTo().alert();
       return true;
     } catch (NoAlertPresentException e) {
       return false;
@@ -41,7 +47,7 @@ public class HelperBase {
 
   protected boolean isElementPresent(By locator) {
     try {
-      wd.findElement(locator);
+      getWd().findElement(locator);
       return true;
     } catch (NoSuchElementException ex) {
       return false;

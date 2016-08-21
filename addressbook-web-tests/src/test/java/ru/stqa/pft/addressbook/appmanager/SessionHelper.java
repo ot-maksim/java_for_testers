@@ -8,8 +8,8 @@ import org.openqa.selenium.WebDriver;
  */
 public class SessionHelper extends HelperBase {
 
-  public SessionHelper(WebDriver wd) {
-    super(wd);
+  public SessionHelper(WebDriver wd, ApplicationManager applicationManager) {
+    super(wd, applicationManager);
   }
 
   public void login(String username, String password) {

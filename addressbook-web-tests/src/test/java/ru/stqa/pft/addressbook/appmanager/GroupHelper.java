@@ -11,10 +11,10 @@ import java.util.List;
 /**
  * Created by maksym on 7/25/16.
  */
-public class GroupHelper extends HelperBase{
+public class GroupHelper extends HelperBase {
 
-  public GroupHelper(WebDriver wd) {
-    super(wd);
+  public GroupHelper(WebDriver wd, ApplicationManager applicationManager) {
+    super(wd, applicationManager);
   }
 
   public void returnToGroupPage() {
@@ -40,7 +40,7 @@ public class GroupHelper extends HelperBase{
   }
 
   public void selectGroup(int index) {
-    wd.findElements(By.name("selected[]")).get(index).click();
+    getWd().findElements(By.name("selected[]")).get(index).click();
   }
 
   public void initGroupModification() {
@@ -63,12 +63,12 @@ public class GroupHelper extends HelperBase{
   }
 
   public int getGroupCount() {
-    return wd.findElements(By.name("selected[]")).size();
+    return getWd().findElements(By.name("selected[]")).size();
   }
 
   public List<GroupData> getGroupList() {
     List<GroupData> groups = new ArrayList<>();
-    List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
+    List<WebElement> elements = getWd().findElements(By.cssSelector("span.group"));
     for (WebElement element : elements){
       String name = element.getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));

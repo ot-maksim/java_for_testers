@@ -11,8 +11,8 @@ import ru.stqa.pft.addressbook.model.ContactData;
  */
 public class ContactHelper extends HelperBase {
 
-  public ContactHelper(WebDriver wd) {
-    super(wd);
+  public ContactHelper(WebDriver wd, ApplicationManager applicationManager) {
+    super(wd, applicationManager);
   }
 
   public void submitContactCreation() {
@@ -27,7 +27,7 @@ public class ContactHelper extends HelperBase {
     type(By.name("email"), contactData.getEmail());
 
     if (isContactCreation) {
-      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+      new Select(getWd().findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")), "group selection element should NOT exist on contact modification form");
     }
@@ -62,7 +62,7 @@ public class ContactHelper extends HelperBase {
   }
 
   public void acceptContactsDeletion() {
-    wd.switchTo().alert().accept();
+    getWd().switchTo().alert().accept();
   }
 
   public boolean isThereAnyContact() {

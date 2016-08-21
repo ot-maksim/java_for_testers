@@ -25,6 +25,10 @@ public class ApplicationManager {
     this.browser = browser;
   }
 
+  public WebDriver getWebDriver() {
+    return wd;
+  }
+
   public void init() {
     if (Objects.equals(browser, BrowserType.FIREFOX)){
       wd = new FirefoxDriver();
@@ -35,10 +39,10 @@ public class ApplicationManager {
     } else if (Objects.equals(browser, BrowserType.OPERA_BLINK)) {
       wd = new OperaDriver();
     }
-    groupHelper = new GroupHelper(wd);
-    contactHelper = new ContactHelper(wd);
-    navigationHelper = new NavigationHelper(wd);
-    sessionHelper = new SessionHelper(wd);
+    groupHelper = new GroupHelper(wd, this);
+    contactHelper = new ContactHelper(wd, this);
+    navigationHelper = new NavigationHelper(wd, this);
+    sessionHelper = new SessionHelper(wd, this);
     wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     wd.get("http://localhost/~maksym/addressbook");
     sessionHelper.login("admin", "secret");
