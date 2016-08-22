@@ -17,57 +17,62 @@ public class GroupHelper extends HelperBase {
     super(wd, applicationManager);
   }
 
-  public void returnToGroupPage() {
-//    click(By.linkText("group page"));
+  public void goToGroupPage() {;
     click(By.xpath(".//*[@id='content']/div/i/a"));
   }
 
-  public void submitGroupCreation() {
-    click(By.name("submit"));
+  public void initCreation() {
+    click(By.name("new"));
   }
 
-  public void fillGroupForm(GroupData groupData) {
+  public void fillForm(GroupData groupData) {
     type(By.name("group_name"), groupData.getName());
     type(By.name("group_header"), groupData.getHeader());
     type(By.name("group_footer"), groupData.getFooter());
   }
 
-  public void initGroupCreation() {
-    click(By.name("new"));
-  }
-
-  public void deleteSelectedGroups() {
-    click(By.xpath("//div[@id='content']/form/input[5]"));
+  public void submitCreation() {
+    click(By.name("submit"));
   }
 
   public void selectGroup(int index) {
     getWd().findElements(By.name("selected[]")).get(index).click();
   }
 
-  public void initGroupModification() {
+  public void submitDeletion() {
+    click(By.xpath("//div[@id='content']/form/input[5]"));
+  }
+
+  public void initModification() {
     click(By.name("edit"));
   }
 
-  public void submitGroupModification() {
+  public void submitModification() {
     click(By.name("update"));
   }
 
-  public boolean isThereAnyGroup() {
-    return isElementPresent(By.name("selected[]"));
+  public void create(GroupData group) {
+    initCreation();
+    fillForm(group);
+    submitCreation();
+    goToGroupPage();
   }
 
-  public void createGroup(GroupData group) {
-    initGroupCreation();
-    fillGroupForm(group);
-    submitGroupCreation();
-    returnToGroupPage();
+  public void modify(int groupByIndex, GroupData group) {
+    selectGroup(groupByIndex);
+    initModification();
+    fillForm(group);
+    submitModification();
+    goToGroupPage();
   }
 
-  public int getGroupCount() {
-    return getWd().findElements(By.name("selected[]")).size();
+  public void delete(int index) {
+    selectGroup(index);
+    submitDeletion();
+    goToGroupPage();
   }
 
-  public List<GroupData> getGroupList() {
+  public List<GroupData> list() {
     List<GroupData> groups = new ArrayList<>();
     List<WebElement> elements = getWd().findElements(By.cssSelector("span.group"));
     for (WebElement element : elements){

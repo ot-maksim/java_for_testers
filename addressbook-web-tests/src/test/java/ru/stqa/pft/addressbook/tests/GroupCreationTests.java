@@ -11,12 +11,14 @@ public class GroupCreationTests extends TestBase {
 
   @Test
   public void testGroupCreation() {
-    APP_MANAGER.getNavigationHelper().goToGroupPage();
-    List<GroupData> before = APP_MANAGER.getGroupHelper().getGroupList();
+    APP_MANAGER.goTo().groupPage();
+    List<GroupData> before = APP_MANAGER.group().list();
     GroupData group = new GroupData("test1", null, null);
-    APP_MANAGER.getGroupHelper().createGroup(group);
-    APP_MANAGER.getNavigationHelper().goToGroupPage();
-    List<GroupData> after = APP_MANAGER.getGroupHelper().getGroupList();
+
+    APP_MANAGER.group().create(group);
+    APP_MANAGER.goTo().groupPage();
+
+    List<GroupData> after = APP_MANAGER.group().list();
 
     Assert.assertEquals(after.size(), before.size() + 1);
 

@@ -3,7 +3,6 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
@@ -21,11 +20,11 @@ public class ContactHelper extends HelperBase {
     super(wd, applicationManager);
   }
 
-  public void submitContactCreation() {
-    click(By.xpath("//div[@id='content']/form/input[21]"));
+  public void initCreation() {
+    click(By.linkText("add new"));
   }
 
-  public void fillContactForm(ContactData contactData, boolean isContactCreation) {
+  public void fillForm(ContactData contactData, boolean isContactCreation) {
     type(By.name("firstname"), contactData.getFirstName());
     type(By.name("lastname"), contactData.getLastName());
     type(By.name("address"), contactData.getAddress());
@@ -36,10 +35,10 @@ public class ContactHelper extends HelperBase {
       try {
         new Select(getWd().findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
       } catch (NoSuchElementException ex) {
-        getApplicationManager().getNavigationHelper().goToGroupPage();
+        getApplicationManager().goTo().groupPage();
         GroupData group = new GroupData(contactData.getGroup(), null, null);
-        getApplicationManager().getGroupHelper().createGroup(group);
-        initContactCreation();
+        getApplicationManager().group().create(group);
+        initCreation();
         new Select(getWd().findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
       }
     } else {
@@ -51,19 +50,26 @@ public class ContactHelper extends HelperBase {
 //    }
   }
 
-  public void initContactCreation() {
-    click(By.linkText("add new"));
+  public void submitCreation() {
+    click(By.xpath("//div[@id='content']/form/input[21]"));
   }
 
-  public void initContactModification(int index) {
+  public void initModification(int index) {
     click(By.xpath(".//*[@id='maintable']/tbody/tr[" + (index + 1) + "]/td[8]/a/img"));
   }
 
-  public void submitContactModification() {
+  public void modify(ContactData contact, int index) {
+    initModification(index);
+    fillForm(contact, false);
+    submitModification();
+    goToHomePage();
+  }
+
+  public void submitModification() {
     click(By.name("update"));
   }
 
-  public void returnToHomePage() {
+  public void goToHomePage() {
     int elements = getWd().findElements(By.xpath(".//*[@id='content']/div/i/a")).size();
 
     if (elements == 1) {
@@ -77,29 +83,33 @@ public class ContactHelper extends HelperBase {
     click(By.xpath(".//*[@id='content']/div/i/a[1]"));
   }
 
-  public void selectContact(int index) {
+  public void select(int index) {
     click(By.xpath(".//*[@id='maintable']/tbody/tr[" + (index + 1) + "]/td[1]"));
   }
 
-  public void deleteContacts() {
+  public void submitDeletion() {
     click(By.xpath("//*[@id='content']/form[2]/div[2]/input"));
   }
 
-  public void acceptContactsDeletion() {
+  public void acceptDeletion() {
     getWd().switchTo().alert().accept();
   }
 
-  public boolean isThereAnyContact() {
-      return isElementPresent(By.xpath("//form[2]/table/tbody/tr[2]/td[1]/input"));
+  public void create(ContactData contact) {
+    initCreation();
+    fillForm(contact, true);
+    submitCreation();
+    goToHomePage();
   }
 
-  public void createContact(ContactData contact) {
-    initContactCreation();
-    fillContactForm(contact, true);
-    submitContactCreation();
+  public void delete(int index) {
+    select(index);
+    submitDeletion();
+    acceptDeletion();
+    goToHomePage();
   }
 
-  public List<ContactData> getContactList() {
+  public List<ContactData> list() {
     List<ContactData> contacts = new ArrayList<>();
     int elements = getWd().findElements(By.xpath(".//*[@id='maintable']/tbody/tr")).size();
     for (int i = 2; i <= elements; i++) {
