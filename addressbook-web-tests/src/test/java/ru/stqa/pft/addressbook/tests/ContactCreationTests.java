@@ -8,19 +8,19 @@ import java.util.Comparator;
 import java.util.List;
 
 public class ContactCreationTests extends TestBase {
-  @Test
+  @Test (enabled = false)
   public void testContactCreation() {
-    app.getNavigationHelper().goToHomePage();
+    APP_MANAGER.getNavigationHelper().goToHomePage();
 
-    List<ContactData> before = app.getContactHelper().getContactList();
-    app.getContactHelper().initContactCreation();
+    List<ContactData> before = APP_MANAGER.getContactHelper().getContactList();
+    APP_MANAGER.getContactHelper().initContactCreation();
 
     ContactData contact = new ContactData("firstName4", "lastName4", "address4", "123456789", "email3@t.com", "test1");
-    app.getContactHelper().fillContactForm(contact, true);
+    APP_MANAGER.getContactHelper().fillContactForm(contact, true);
 
-    app.getContactHelper().submitContactCreation();
-    app.getContactHelper().returnToHomePage();
-    List<ContactData> after = app.getContactHelper().getContactList();
+    APP_MANAGER.getContactHelper().submitContactCreation();
+    APP_MANAGER.getContactHelper().returnToHomePage();
+    List<ContactData> after = APP_MANAGER.getContactHelper().getContactList();
 
     Assert.assertEquals(before.size() + 1, after.size());
 

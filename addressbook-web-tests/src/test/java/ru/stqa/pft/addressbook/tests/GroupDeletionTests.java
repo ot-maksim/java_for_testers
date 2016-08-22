@@ -10,16 +10,16 @@ public class GroupDeletionTests extends TestBase {
 
   @Test
   public void testGroupDeletion() {
-    app.getNavigationHelper().goToGroupPage();
+    APP_MANAGER.getNavigationHelper().goToGroupPage();
 
-    if(!app.getGroupHelper().isThereAnyGroup()) {
-      app.getGroupHelper().createGroup(new GroupData("test1", "test2", "test3"));
+    if(!APP_MANAGER.getGroupHelper().isThereAnyGroup()) {
+      APP_MANAGER.getGroupHelper().createGroup(new GroupData("test1", "test2", "test3"));
     }
-    List<GroupData> before = app.getGroupHelper().getGroupList();
-    app.getGroupHelper().selectGroup(before.size() - 1);
-    app.getGroupHelper().deleteSelectedGroups();
-    app.getGroupHelper().returnToGroupPage();
-    List<GroupData> after = app.getGroupHelper().getGroupList();
+    List<GroupData> before = APP_MANAGER.getGroupHelper().getGroupList();
+    APP_MANAGER.getGroupHelper().selectGroup(before.size() - 1);
+    APP_MANAGER.getGroupHelper().deleteSelectedGroups();
+    APP_MANAGER.getGroupHelper().returnToGroupPage();
+    List<GroupData> after = APP_MANAGER.getGroupHelper().getGroupList();
 
     Assert.assertEquals(after.size(), before.size() - 1);
 

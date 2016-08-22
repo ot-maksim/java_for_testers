@@ -12,23 +12,23 @@ import java.util.List;
  */
 public class ContactModificationTests extends TestBase {
 
-  @Test
+  @Test (enabled = false)
   public void testContactModification(){
-    app.getNavigationHelper().goToHomePage();
+    APP_MANAGER.getNavigationHelper().goToHomePage();
 
-    if(!app.getContactHelper().isThereAnyContact()){
-      app.getContactHelper().createContact(new ContactData("firstName3", "lastName3", "address3", "123456789", "email3@t.com", "test1"));
-      app.getNavigationHelper().goToHomePage();
+    if(!APP_MANAGER.getContactHelper().isThereAnyContact()){
+      APP_MANAGER.getContactHelper().createContact(new ContactData("firstName3", "lastName3", "address3", "123456789", "email3@t.com", "test1"));
+      APP_MANAGER.getNavigationHelper().goToHomePage();
     }
-    List<ContactData> before = app.getContactHelper().getContactList();
-    app.getContactHelper().initContactModification(before.size());
+    List<ContactData> before = APP_MANAGER.getContactHelper().getContactList();
+    APP_MANAGER.getContactHelper().initContactModification(before.size());
 
     ContactData contact = new ContactData("firstName123", "lastName123", "address123", "123456789", "email123@t.com", null);
-    app.getContactHelper().fillContactForm(contact, false);
+    APP_MANAGER.getContactHelper().fillContactForm(contact, false);
 
-    app.getContactHelper().submitContactModification();
-    app.getContactHelper().returnToHomePage();
-    List<ContactData> after = app.getContactHelper().getContactList();
+    APP_MANAGER.getContactHelper().submitContactModification();
+    APP_MANAGER.getContactHelper().returnToHomePage();
+    List<ContactData> after = APP_MANAGER.getContactHelper().getContactList();
 
     Assert.assertEquals(before.size(), after.size());
 
