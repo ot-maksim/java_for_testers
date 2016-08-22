@@ -115,7 +115,7 @@ public class ContactHelper extends HelperBase {
     for (int i = 2; i <= elements; i++) {
       String lastName = getWd().findElement(By.xpath(".//*[@id='maintable']/tbody/tr[" + i + "]/td[2]")).getText();
       String firstName = getWd().findElement(By.xpath(".//*[@id='maintable']/tbody/tr[" + i + "]/td[3]")).getText();
-      ContactData contact = new ContactData(firstName, lastName, null, null, null, null);
+      ContactData contact = new ContactData().withFirstName(firstName).withLastName(lastName);
       contacts.add(contact);
     }
     return contacts;
