@@ -33,13 +33,13 @@ public class ContactHelper extends HelperBase {
 
     if (isContactCreation) {
       try {
-        new Select(getWd().findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+        new Select(webDriver().findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
       } catch (NoSuchElementException ex) {
-        getApplicationManager().goTo().groupPage();
+        appManager().goTo().groupPage();
         GroupData group = new GroupData().withName(contactData.getGroup());
-        getApplicationManager().group().create(group);
+        appManager().group().create(group);
         initCreation();
-        new Select(getWd().findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+        new Select(webDriver().findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
       }
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")), "group selection element should NOT exist on contact modification form");
@@ -70,7 +70,7 @@ public class ContactHelper extends HelperBase {
   }
 
   public void goToHomePage() {
-    int elements = getWd().findElements(By.xpath(".//*[@id='content']/div/i/a")).size();
+    int elements = webDriver().findElements(By.xpath(".//*[@id='content']/div/i/a")).size();
 
     if (elements == 1) {
       click(By.xpath(".//*[@id='content']/div/i/a[1]"));
@@ -92,7 +92,7 @@ public class ContactHelper extends HelperBase {
   }
 
   public void acceptDeletion() {
-    getWd().switchTo().alert().accept();
+    webDriver().switchTo().alert().accept();
   }
 
   public void create(ContactData contact) {
@@ -106,15 +106,15 @@ public class ContactHelper extends HelperBase {
     select(index);
     submitDeletion();
     acceptDeletion();
-    goToHomePage();
+    appManager().goTo().homePage();
   }
 
   public List<ContactData> list() {
     List<ContactData> contacts = new ArrayList<>();
-    int elements = getWd().findElements(By.xpath(".//*[@id='maintable']/tbody/tr")).size();
+    int elements = webDriver().findElements(By.xpath(".//*[@id='maintable']/tbody/tr")).size();
     for (int i = 2; i <= elements; i++) {
-      String lastName = getWd().findElement(By.xpath(".//*[@id='maintable']/tbody/tr[" + i + "]/td[2]")).getText();
-      String firstName = getWd().findElement(By.xpath(".//*[@id='maintable']/tbody/tr[" + i + "]/td[3]")).getText();
+      String lastName = webDriver().findElement(By.xpath(".//*[@id='maintable']/tbody/tr[" + i + "]/td[2]")).getText();
+      String firstName = webDriver().findElement(By.xpath(".//*[@id='maintable']/tbody/tr[" + i + "]/td[3]")).getText();
       ContactData contact = new ContactData().withFirstName(firstName).withLastName(lastName);
       contacts.add(contact);
     }

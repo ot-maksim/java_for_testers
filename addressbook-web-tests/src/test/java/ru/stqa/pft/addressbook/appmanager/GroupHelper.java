@@ -37,7 +37,7 @@ public class GroupHelper extends HelperBase {
   }
 
   public void selectGroup(int index) {
-    getWd().findElements(By.name("selected[]")).get(index).click();
+    webDriver().findElements(By.name("selected[]")).get(index).click();
   }
 
   public void submitDeletion() {
@@ -75,7 +75,7 @@ public class GroupHelper extends HelperBase {
 
   public List<GroupData> list() {
     List<GroupData> groups = new ArrayList<>();
-    List<WebElement> elements = getWd().findElements(By.cssSelector("span.group"));
+    List<WebElement> elements = webDriver().findElements(By.cssSelector("span.group"));
     for (WebElement element : elements) {
       String name = element.getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));

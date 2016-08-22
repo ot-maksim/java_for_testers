@@ -17,32 +17,32 @@ public class HelperBase {
     this.applicationManager = applicationManager;
   }
 
-  protected ApplicationManager getApplicationManager() {
+  protected ApplicationManager appManager() {
     return applicationManager;
   }
 
-  protected WebDriver getWd() {
+  protected WebDriver webDriver() {
     return wd;
   }
 
   protected void type(By locator, String text) {
     click((locator));
     if (text != null) {
-      String existingText = getWd().findElement(locator).getAttribute("value");
+      String existingText = webDriver().findElement(locator).getAttribute("value");
       if (!text.equals(existingText)) {
-        getWd().findElement(locator).clear();
-        getWd().findElement(locator).sendKeys(text);
+        webDriver().findElement(locator).clear();
+        webDriver().findElement(locator).sendKeys(text);
       }
     }
   }
 
   protected void click(By locator) {
-    getWd().findElement(locator).click();
+    webDriver().findElement(locator).click();
   }
 
   protected boolean isAlertPresent() {
     try {
-      getWd().switchTo().alert();
+      webDriver().switchTo().alert();
       return true;
     } catch (NoAlertPresentException e) {
       return false;
@@ -51,7 +51,7 @@ public class HelperBase {
 
   protected boolean isElementPresent(By locator) {
     try {
-      getWd().findElement(locator);
+      webDriver().findElement(locator);
       return true;
     } catch (NoSuchElementException ex) {
       return false;

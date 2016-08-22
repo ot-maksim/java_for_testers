@@ -13,19 +13,17 @@ import java.util.List;
  */
 public class ContactModificationTests extends TestBase {
 
-  @BeforeMethod(enabled = false)
+  @BeforeMethod
   public void ensurePreconditions() {
     APP_MANAGER.goTo().homePage();
     if (APP_MANAGER.contact().list().size() == 0) {
       APP_MANAGER.contact().create(new ContactData().withFirstName("firstName3").withLastName("lastName3").withAddress("address3").
               withHomePhoneNumber("123456789").withEmail("email3@t.com").withGroup("test1"));
-      APP_MANAGER.goTo().homePage();
     }
   }
 
-  @Test(enabled = false)
+  @Test
   public void testContactModification() {
-
     List<ContactData> before = APP_MANAGER.contact().list();
     int index = before.size();
     ContactData contact = new ContactData().withFirstName("firstName123").withLastName("lastName123").
