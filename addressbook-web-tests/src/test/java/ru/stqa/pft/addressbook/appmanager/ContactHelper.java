@@ -36,7 +36,7 @@ public class ContactHelper extends HelperBase {
         new Select(getWd().findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
       } catch (NoSuchElementException ex) {
         getApplicationManager().goTo().groupPage();
-        GroupData group = new GroupData(contactData.getGroup(), null, null);
+        GroupData group = new GroupData().withName(contactData.getGroup());
         getApplicationManager().group().create(group);
         initCreation();
         new Select(getWd().findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());

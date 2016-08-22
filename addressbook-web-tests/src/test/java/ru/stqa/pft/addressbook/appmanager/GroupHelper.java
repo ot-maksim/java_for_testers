@@ -17,7 +17,8 @@ public class GroupHelper extends HelperBase {
     super(wd, applicationManager);
   }
 
-  public void goToGroupPage() {;
+  public void goToGroupPage() {
+    ;
     click(By.xpath(".//*[@id='content']/div/i/a"));
   }
 
@@ -75,10 +76,10 @@ public class GroupHelper extends HelperBase {
   public List<GroupData> list() {
     List<GroupData> groups = new ArrayList<>();
     List<WebElement> elements = getWd().findElements(By.cssSelector("span.group"));
-    for (WebElement element : elements){
+    for (WebElement element : elements) {
       String name = element.getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      GroupData group = new GroupData(id, name, null, null);
+      GroupData group = new GroupData().withId(id).withName(name);
       groups.add(group);
     }
     return groups;

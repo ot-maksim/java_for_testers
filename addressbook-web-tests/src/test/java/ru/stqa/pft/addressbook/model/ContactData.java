@@ -1,12 +1,12 @@
 package ru.stqa.pft.addressbook.model;
 
 public class ContactData {
-  private final String firstName;
-  private final String lastName;
-  private final String address;
-  private final String homePhoneNumber;
-  private final String email;
-  private final String group;
+  private String firstName;
+  private String lastName;
+  private String address;
+  private String homePhoneNumber;
+  private String email;
+  private String group;
 
   public ContactData(String firstName, String lastName, String address, String homePhoneNumber, String email, String group) {
     this.firstName = firstName;
