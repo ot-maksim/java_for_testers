@@ -4,20 +4,33 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class ContactCreationTests extends TestBase {
   @Test
   public void testContactCreation() {
     app.getNavigationHelper().goToHomePage();
+
     List<ContactData> before = app.getContactHelper().getContactList();
     app.getContactHelper().initContactCreation();
-    app.getContactHelper().fillContactForm(new ContactData("firstName3", "lastName3", "address3", "123456789", "email3@t.com", "test1"), true);
+
+    ContactData contact = new ContactData("firstName4", "lastName4", "address4", "123456789", "email3@t.com", "test1");
+    app.getContactHelper().fillContactForm(contact, true);
+
     app.getContactHelper().submitContactCreation();
     app.getContactHelper().returnToHomePage();
     List<ContactData> after = app.getContactHelper().getContactList();
 
     Assert.assertEquals(before.size() + 1, after.size());
+
+    before.add(contact);
+
+    Comparator<? super ContactData> byLastName = (contact1, contact2) -> contact1.getLastName().compareTo(contact2.getLastName());
+    before.sort(byLastName);
+    after.sort(byLastName);
+
+    Assert.assertEquals(before, after);
   }
 
 }

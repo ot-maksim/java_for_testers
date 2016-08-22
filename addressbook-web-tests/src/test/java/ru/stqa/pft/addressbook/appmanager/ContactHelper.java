@@ -55,8 +55,8 @@ public class ContactHelper extends HelperBase {
     click(By.linkText("add new"));
   }
 
-  public void initContactModification() {
-    click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+  public void initContactModification(int index) {
+    click(By.xpath(".//*[@id='maintable']/tbody/tr[" + (index + 1) + "]/td[8]/a/img"));
   }
 
   public void submitContactModification() {
@@ -77,8 +77,8 @@ public class ContactHelper extends HelperBase {
     click(By.xpath(".//*[@id='content']/div/i/a[1]"));
   }
 
-  public void selectContact() {
-    click(By.xpath("//form[2]/table/tbody/tr[2]/td[1]/input"));
+  public void selectContact(int index) {
+    click(By.xpath(".//*[@id='maintable']/tbody/tr[" + (index + 1) + "]/td[1]"));
   }
 
   public void deleteContacts() {
