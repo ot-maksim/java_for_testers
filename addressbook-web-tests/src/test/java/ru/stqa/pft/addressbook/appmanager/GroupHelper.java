@@ -6,7 +6,9 @@ import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by maksym on 7/25/16.
@@ -36,8 +38,8 @@ public class GroupHelper extends HelperBase {
     click(By.name("submit"));
   }
 
-  public void selectGroup(int index) {
-    webDriver().findElements(By.name("selected[]")).get(index).click();
+  public void selectGroupById(int id) {
+    webDriver().findElement(By.cssSelector("input[value='" + id + "']")).click();
   }
 
   public void submitDeletion() {
@@ -59,22 +61,22 @@ public class GroupHelper extends HelperBase {
     goToGroupPage();
   }
 
-  public void modify(int groupByIndex, GroupData group) {
-    selectGroup(groupByIndex);
+  public void modify(GroupData group) {
+    selectGroupById(group.getId());
     initModification();
     fillForm(group);
     submitModification();
     goToGroupPage();
   }
 
-  public void delete(int index) {
-    selectGroup(index);
+  public void delete(GroupData group) {
+    selectGroupById(group.getId());
     submitDeletion();
     goToGroupPage();
   }
 
-  public List<GroupData> list() {
-    List<GroupData> groups = new ArrayList<>();
+  public Set<GroupData> all() {
+    Set<GroupData> groups = new HashSet<>();
     List<WebElement> elements = webDriver().findElements(By.cssSelector("span.group"));
     for (WebElement element : elements) {
       String name = element.getText();
