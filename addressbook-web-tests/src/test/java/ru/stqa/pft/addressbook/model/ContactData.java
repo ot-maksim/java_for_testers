@@ -7,6 +7,7 @@ public class ContactData {
   private String homePhoneNumber;
   private String email;
   private String group;
+  private int id = 0;
 
   public String getFirstName() {
     return firstName;
@@ -32,9 +33,19 @@ public class ContactData {
     return group;
   }
 
+  public int getId() {
+    return id;
+  }
+
+  public ContactData withId(int id) {
+    this.id = id;
+    return this;
+  }
+
   public ContactData withFirstName(String firstName) {
     this.firstName = firstName;
     return this;
+
   }
 
   public ContactData withLastName(String lastName) {
@@ -67,6 +78,7 @@ public class ContactData {
     return "ContactData{" +
             "firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
+            ", id=" + id +
             '}';
   }
 
@@ -77,6 +89,7 @@ public class ContactData {
 
     ContactData that = (ContactData) o;
 
+    if (id != that.id) return false;
     if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
     return lastName != null ? lastName.equals(that.lastName) : that.lastName == null;
 
@@ -86,6 +99,7 @@ public class ContactData {
   public int hashCode() {
     int result = firstName != null ? firstName.hashCode() : 0;
     result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+    result = 31 * result + id;
     return result;
   }
 }

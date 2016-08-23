@@ -40,7 +40,7 @@ public class GroupHelper extends HelperBase {
   }
 
   public void selectGroupById(int id) {
-    webDriver().findElement(By.cssSelector("input[value='" + id + "']")).click();
+    click(By.cssSelector("input[value='" + id + "']"));
   }
 
   public void submitDeletion() {

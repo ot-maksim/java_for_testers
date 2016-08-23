@@ -6,10 +6,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by maksym on 7/25/16.
@@ -44,22 +47,18 @@ public class ContactHelper extends HelperBase {
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")), "group selection element should NOT exist on contact modification form");
     }
-
-//    if (isElementPresent(By.name("new_group"))) {
-//      new Select(wd.findElement(By.name("new_group"))).selectByValue(contactData.getGroup());
-//    }
   }
 
   public void submitCreation() {
     click(By.xpath("//div[@id='content']/form/input[21]"));
   }
 
-  public void initModification(int index) {
-    click(By.xpath(".//*[@id='maintable']/tbody/tr[" + (index + 1) + "]/td[8]/a/img"));
+  private void initModificationById(int id) {
+    click(By.xpath(".//a[@href='edit.php?id=" + id + "']"));
   }
 
-  public void modify(ContactData contact, int index) {
-    initModification(index);
+  public void modify(ContactData contact) {
+    initModificationById(contact.getId());
     fillForm(contact, false);
     submitModification();
     goToHomePage();
@@ -83,8 +82,8 @@ public class ContactHelper extends HelperBase {
     click(By.xpath(".//*[@id='content']/div/i/a[1]"));
   }
 
-  public void select(int index) {
-    click(By.xpath(".//*[@id='maintable']/tbody/tr[" + (index + 1) + "]/td[1]"));
+  public void selectById(int id) {
+    click(By.xpath(".//input[@id='" + id + "']"));
   }
 
   public void submitDeletion() {
@@ -102,20 +101,23 @@ public class ContactHelper extends HelperBase {
     goToHomePage();
   }
 
-  public void delete(int index) {
-    select(index);
+  public void delete(ContactData contact) {
+    selectById(contact.getId());
     submitDeletion();
     acceptDeletion();
     appManager().goTo().homePage();
   }
 
-  public List<ContactData> list() {
-    List<ContactData> contacts = new ArrayList<>();
-    int elements = webDriver().findElements(By.xpath(".//*[@id='maintable']/tbody/tr")).size();
-    for (int i = 2; i <= elements; i++) {
-      String lastName = webDriver().findElement(By.xpath(".//*[@id='maintable']/tbody/tr[" + i + "]/td[2]")).getText();
-      String firstName = webDriver().findElement(By.xpath(".//*[@id='maintable']/tbody/tr[" + i + "]/td[3]")).getText();
-      ContactData contact = new ContactData().withFirstName(firstName).withLastName(lastName);
+  public Contacts all() {
+    Contacts contacts = new Contacts();
+    int elements = webDriver().findElements(By.xpath(".//*[@id='maintable']//input[@type='checkbox']")).size();
+    int index = 0;
+    for (int i = 1; i <= elements; i++) {
+      index = i + 1;
+      String lastName = webDriver().findElement(By.xpath(".//*[@id='maintable']/tbody/tr[" + index + "]/td[2]")).getText();
+      String firstName = webDriver().findElement(By.xpath(".//*[@id='maintable']/tbody/tr[" + index + "]/td[3]")).getText();
+      int id = Integer.parseInt(webDriver().findElement(By.xpath(".//*[@id='maintable']/tbody/tr[" + index + "]/td[1]/input")).getAttribute("id"));
+      ContactData contact = new ContactData().withId(id).withFirstName(firstName).withLastName(lastName);
       contacts.add(contact);
     }
     return contacts;
