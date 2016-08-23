@@ -5,8 +5,15 @@ repositories{
 }
 
 dependencies{
-    compile 'org.testng:testng:6.9.10'
-    compile 'org.seleniumhq.selenium:selenium-java:2.53.1'
+    // https://mvnrepository.com/artifact/org.testng/testng
+    compile group: 'org.testng', name: 'testng', version: '6.9.10'
+
+    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '2.53.1'
+
+    // https://mvnrepository.com/artifact/org.hamcrest/java-hamcrest
+    compile group: 'org.hamcrest', name: 'java-hamcrest', version: '2.0.0.0'
+
 }
 
 test {
