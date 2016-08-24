@@ -6,10 +6,7 @@ import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by maksym on 7/25/16.
@@ -20,7 +17,7 @@ public class GroupHelper extends HelperBase {
     super(wd, applicationManager);
   }
 
-  public void goToGroupPage() {
+  public void returnToGroupPage() {
     ;
     click(By.xpath(".//*[@id='content']/div/i/a"));
   }
@@ -59,7 +56,8 @@ public class GroupHelper extends HelperBase {
     initCreation();
     fillForm(group);
     submitCreation();
-    goToGroupPage();
+    groupCache = null;
+    returnToGroupPage();
   }
 
   public void modify(GroupData group) {
@@ -67,24 +65,31 @@ public class GroupHelper extends HelperBase {
     initModification();
     fillForm(group);
     submitModification();
-    goToGroupPage();
+    groupCache = null;
+    returnToGroupPage();
   }
 
   public void delete(GroupData group) {
     selectGroupById(group.getId());
     submitDeletion();
-    goToGroupPage();
+    groupCache = null;
+    returnToGroupPage();
   }
 
+  Groups groupCache = null;
+
   public Groups all() {
-    Groups groups = new Groups();
+    if (groupCache != null) {
+      return new Groups(groupCache);
+    }
+    groupCache = new Groups();
     List<WebElement> elements = webDriver().findElements(By.cssSelector("span.group"));
     for (WebElement element : elements) {
       String name = element.getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
       GroupData group = new GroupData().withId(id).withName(name);
-      groups.add(group);
+      groupCache.add(group);
     }
-    return groups;
+    return new Groups(groupCache);
   }
 }
