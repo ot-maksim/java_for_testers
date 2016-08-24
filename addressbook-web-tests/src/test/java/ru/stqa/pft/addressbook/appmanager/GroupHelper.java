@@ -52,6 +52,10 @@ public class GroupHelper extends HelperBase {
     click(By.name("update"));
   }
 
+  public int count() {
+    return webDriver().findElements(By.name("selected[]")).size();
+  }
+
   public void create(GroupData group) {
     initCreation();
     fillForm(group);
