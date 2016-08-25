@@ -3,11 +3,14 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
+
+import java.util.List;
 
 /**
  * Created by maksym on 7/25/16.
@@ -123,15 +126,30 @@ public class ContactHelper extends HelperBase {
 
   public Contacts all() {
     Contacts contacts = new Contacts();
-    int elements = webDriver().findElements(By.xpath(".//*[@id='maintable']//input[@type='checkbox']")).size();
-    int index = 0;
-    for (int i = 1; i <= elements; i++) {
-      index = i + 1;
-      String lastName = webDriver().findElement(By.xpath(".//*[@id='maintable']/tbody/tr[" + index + "]/td[2]")).getText();
-      String firstName = webDriver().findElement(By.xpath(".//*[@id='maintable']/tbody/tr[" + index + "]/td[3]")).getText();
-      int id = Integer.parseInt(webDriver().findElement(By.xpath(".//*[@id='maintable']/tbody/tr[" + index + "]/td[1]/input")).getAttribute("id"));
-      ContactData contact = new ContactData().withId(id).withFirstName(firstName).withLastName(lastName);
-      contacts.add(contact);
+
+    //option 1 - me
+//    int elements = webDriver().findElements(By.xpath(".//*[@id='maintable']//input[@type='checkbox']")).size();
+//    int index = 0;
+//    for (int i = 1; i <= elements; i++) {
+//      index = i + 1;
+//      String lastName = webDriver().findElement(By.xpath(".//*[@id='maintable']/tbody/tr[" + index + "]/td[2]")).getText();
+//      String firstName = webDriver().findElement(By.xpath(".//*[@id='maintable']/tbody/tr[" + index + "]/td[3]")).getText();
+//      int id = Integer.parseInt(webDriver().findElement(By.xpath(".//*[@id='maintable']/tbody/tr[" + index + "]/td[1]/input")).getAttribute("id"));
+//      String[] allPhones = webDriver().findElement(By.xpath(".//*[@id='maintable']/tbody/tr[" + index + "]/td[6]")).getText().split("\n");
+//      contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withHomePhone(allPhones[0]).
+//              withMobilePhone(allPhones[1]).withWorkPhone(allPhones[2]));
+//    }
+
+    //option 2 - Barancev
+    List<WebElement> rows = webDriver().findElements(By.name("entry"));
+    for (WebElement row : rows) {
+      List<WebElement> cells = row.findElements(By.tagName("td"));
+      int id = Integer.parseInt(cells.get(0).findElement(By.tagName("input")).getAttribute("value"));
+      String lastname = cells.get(1).getText();
+      String firstname = cells.get(2).getText();
+      String[] phones = cells.get(5).getText().split("\n");
+      contacts.add(new ContactData().withId(id).withFirstName(firstname).withLastName(lastname).withHomePhone(phones[0]).
+              withMobilePhone(phones[1]).withWorkPhone(phones[2]));
     }
     return contacts;
   }
