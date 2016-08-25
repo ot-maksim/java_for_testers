@@ -9,11 +9,6 @@ import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 /**
  * Created by maksym on 7/25/16.
  */
@@ -31,7 +26,9 @@ public class ContactHelper extends HelperBase {
     type(By.name("firstname"), contactData.getFirstName());
     type(By.name("lastname"), contactData.getLastName());
     type(By.name("address"), contactData.getAddress());
-    type(By.name("home"), contactData.getHomePhoneNumber());
+    type(By.name("home"), contactData.getHomePhone());
+    type(By.name("mobile"), contactData.getMobilePhone());
+    type(By.name("work"), contactData.getWorkPhone());
     type(By.name("email"), contactData.getEmail());
 
     if (isContactCreation) {
@@ -53,7 +50,23 @@ public class ContactHelper extends HelperBase {
     click(By.xpath("//div[@id='content']/form/input[21]"));
   }
 
-  private void initModificationById(int id) {
+  public void initModificationById(int id) {
+
+    //several options how to locate the same element
+
+    //option 1
+//    WebElement checkbox = webDriver().findElement(By.cssSelector(String.format("input[id='%d']",id)));
+//    WebElement row = checkbox.findElement(By.xpath("./../.."));
+//    List<WebElement> cells = row.findElements(By.tagName("td"));
+//    cells.get(7).findElement(By.tagName("a")).click();
+
+    //option 2
+//    click(By.xpath(String.format(".//input[@id='%d']/../../td[8]/a", id)));
+
+    //option 3
+//    click(By.xpath(String.format(".//tr[.//input[@value='%s']]/td[8]/a", id)));
+
+    //option 4
     click(By.xpath(".//a[@href='edit.php?id=" + id + "']"));
   }
 
@@ -121,5 +134,18 @@ public class ContactHelper extends HelperBase {
       contacts.add(contact);
     }
     return contacts;
+  }
+
+  public ContactData infoFromEditForm(ContactData contact) {
+    initModificationById(contact.getId());
+    String firstName = webDriver().findElement(By.name("firstname")).getAttribute("value");
+    String lastName = webDriver().findElement(By.name("lastname")).getAttribute("value");
+    String homePhoneNumber = webDriver().findElement(By.name("home")).getAttribute("value");
+    String mobilePhoneNumber = webDriver().findElement(By.name("mobile")).getAttribute("value");
+    String workPhoneNumber = webDriver().findElement(By.name("work")).getAttribute("value");
+    webDriver().navigate().back();
+
+    return new ContactData().withFirstName(firstName).withLastName(lastName).withHomePhone(homePhoneNumber).
+            withMobilePhone(mobilePhoneNumber).withWorkPhone(workPhoneNumber);
   }
 }
