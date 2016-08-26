@@ -1,12 +1,9 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -23,9 +20,16 @@ public class ContactPhoneTests extends TestBase {
   public void ensurePreconditions() {
     APP_MANAGER.goTo().homePage();
     if (APP_MANAGER.contact().all().size() == 0) {
-      APP_MANAGER.contact().create(new ContactData().withFirstName("firstName1").withLastName("lastName1").withAddress("address1").
-              withHomePhone("123456789").withEmail("email1@t.com").withGroup("test1").withHomePhone("111").
-              withMobilePhone("222").withWorkPhone("333"));
+      APP_MANAGER.contact().create(new ContactData()
+              .withFirstName("firstName1")
+              .withLastName("lastName1")
+              .withFirstAddress("address1")
+              .withHomePhone("123456789")
+              .withFirstEmail("email1@t.com")
+              .withGroup("test1")
+              .withHomePhone("111")
+              .withMobilePhone("222")
+              .withWorkPhone("333"));
     }
   }
 

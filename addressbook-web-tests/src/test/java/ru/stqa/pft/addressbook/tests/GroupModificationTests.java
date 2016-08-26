@@ -17,7 +17,10 @@ public class GroupModificationTests extends TestBase {
   public void ensurePreconditions() {
     APP_MANAGER.goTo().groupPage();
     if (APP_MANAGER.group().all().size() == 0) {
-      APP_MANAGER.group().create(new GroupData().withName("test1").withHeader("test2").withFooter("test3"));
+      APP_MANAGER.group().create(new GroupData()
+              .withName("test1")
+              .withHeader("test2")
+              .withFooter("test3"));
     }
   }
 

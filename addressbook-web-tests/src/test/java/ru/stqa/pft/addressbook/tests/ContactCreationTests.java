@@ -12,8 +12,13 @@ public class ContactCreationTests extends TestBase {
   public void testContactCreation() {
     APP_MANAGER.goTo().homePage();
     Contacts before = APP_MANAGER.contact().all();
-    ContactData contact = new ContactData().withFirstName("firstName4").withLastName("lastName4").withAddress("address4").
-            withHomePhone("123456789").withEmail("email3@t.com").withGroup("test1");
+    ContactData contact = new ContactData()
+            .withFirstName("firstName4")
+            .withLastName("lastName4")
+            .withFirstAddress("address4")
+            .withHomePhone("123456789")
+            .withFirstEmail("email3@t.com")
+            .withGroup("test1");
     APP_MANAGER.contact().create(contact);
     Contacts after = APP_MANAGER.contact().all();
 

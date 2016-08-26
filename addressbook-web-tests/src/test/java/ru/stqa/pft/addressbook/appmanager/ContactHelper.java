@@ -21,18 +21,19 @@ public class ContactHelper extends HelperBase {
     super(wd, applicationManager);
   }
 
-  public void initCreation() {
+  public ContactHelper initCreation() {
     click(By.linkText("add new"));
+    return this;
   }
 
-  public void fillForm(ContactData contactData, boolean isContactCreation) {
+  public ContactHelper fillForm(ContactData contactData, boolean isContactCreation) {
     type(By.name("firstname"), contactData.getFirstName());
     type(By.name("lastname"), contactData.getLastName());
-    type(By.name("address"), contactData.getAddress());
+    type(By.name("address"), contactData.getFirstAddress());
     type(By.name("home"), contactData.getHomePhone());
     type(By.name("mobile"), contactData.getMobilePhone());
     type(By.name("work"), contactData.getWorkPhone());
-    type(By.name("email"), contactData.getEmail());
+    type(By.name("email"), contactData.getFirstEmail());
 
     if (isContactCreation) {
       try {
@@ -47,6 +48,7 @@ public class ContactHelper extends HelperBase {
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")), "group selection element should NOT exist on contact modification form");
     }
+    return this;
   }
 
   public void submitCreation() {
@@ -71,13 +73,6 @@ public class ContactHelper extends HelperBase {
 
     //option 4
     click(By.xpath(".//a[@href='edit.php?id=" + id + "']"));
-  }
-
-  public void modify(ContactData contact) {
-    initModificationById(contact.getId());
-    fillForm(contact, false);
-    submitModification();
-    goToHomePage();
   }
 
   public void submitModification() {
@@ -117,6 +112,13 @@ public class ContactHelper extends HelperBase {
     goToHomePage();
   }
 
+  public void modify(ContactData contact) {
+    initModificationById(contact.getId());
+    fillForm(contact, false);
+    submitModification();
+    goToHomePage();
+  }
+
   public void delete(ContactData contact) {
     selectById(contact.getId());
     submitDeletion();
@@ -147,8 +149,17 @@ public class ContactHelper extends HelperBase {
       int id = Integer.parseInt(cells.get(0).findElement(By.tagName("input")).getAttribute("value"));
       String lastname = cells.get(1).getText();
       String firstname = cells.get(2).getText();
+      String firstAddress = cells.get(3).getText();
+      String allEmails = cells.get(4).getText();
       String allPhones = cells.get(5).getText();
-      contacts.add(new ContactData().withId(id).withFirstName(firstname).withLastName(lastname).withAllPhones(allPhones));
+
+      contacts.add(new ContactData()
+              .withId(id)
+              .withLastName(lastname)
+              .withFirstName(firstname)
+              .withFirstAddress(firstAddress)
+              .withAllEmails(allEmails)
+              .withAllPhones(allPhones));
     }
     return contacts;
   }
@@ -160,9 +171,21 @@ public class ContactHelper extends HelperBase {
     String homePhoneNumber = webDriver().findElement(By.name("home")).getAttribute("value");
     String mobilePhoneNumber = webDriver().findElement(By.name("mobile")).getAttribute("value");
     String workPhoneNumber = webDriver().findElement(By.name("work")).getAttribute("value");
+    String firstAddress = webDriver().findElement(By.name("address")).getAttribute("value");
+    String firstEmail = webDriver().findElement(By.name("email")).getAttribute("value");
+    String secondEmail = webDriver().findElement(By.name("email2")).getAttribute("value");
+    String thirdEmail = webDriver().findElement(By.name("email3")).getAttribute("value");
     webDriver().navigate().back();
 
-    return new ContactData().withFirstName(firstName).withLastName(lastName).withHomePhone(homePhoneNumber).
-            withMobilePhone(mobilePhoneNumber).withWorkPhone(workPhoneNumber);
+    return new ContactData()
+            .withLastName(lastName)
+            .withFirstName(firstName)
+            .withHomePhone(homePhoneNumber)
+            .withMobilePhone(mobilePhoneNumber)
+            .withWorkPhone(workPhoneNumber)
+            .withFirstAddress(firstAddress)
+            .withFirstEmail(firstEmail)
+            .withSecondEmail(secondEmail)
+            .withThirdEmail(thirdEmail);
   }
 }

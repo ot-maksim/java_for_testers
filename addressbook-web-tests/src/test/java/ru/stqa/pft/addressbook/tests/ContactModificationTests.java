@@ -17,8 +17,13 @@ public class ContactModificationTests extends TestBase {
   public void ensurePreconditions() {
     APP_MANAGER.goTo().homePage();
     if (APP_MANAGER.contact().all().size() == 0) {
-      APP_MANAGER.contact().create(new ContactData().withFirstName("firstName3").withLastName("lastName3").withAddress("address3").
-              withHomePhone("123456789").withEmail("email3@t.com").withGroup("test1"));
+      APP_MANAGER.contact().create(new ContactData()
+              .withFirstName("firstName3")
+              .withLastName("lastName3")
+              .withFirstAddress("address3")
+              .withHomePhone("123456789")
+              .withFirstEmail("email3@t.com")
+              .withGroup("test1"));
     }
   }
 
@@ -27,7 +32,7 @@ public class ContactModificationTests extends TestBase {
     Contacts before = APP_MANAGER.contact().all();
     ContactData modifiedContact = before.iterator().next();
     ContactData contact = new ContactData().withId(modifiedContact.getId()).withFirstName("firstName123").withLastName("lastName123").
-            withAddress("address123").withHomePhone("123456789").withEmail("email123@t.com");
+            withFirstAddress("address123").withHomePhone("123456789").withFirstEmail("email123@t.com");
     APP_MANAGER.contact().modify(contact);
     Contacts after = APP_MANAGER.contact().all();
 
