@@ -37,7 +37,9 @@ public class ContactHelper extends HelperBase {
 
     if (isContactCreation) {
       try {
-        new Select(webDriver().findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+        if (contactData.getGroup() != null) {
+          new Select(webDriver().findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+        }
       } catch (NoSuchElementException ex) {
         appManager().goTo().groupPage();
         GroupData group = new GroupData().withName(contactData.getGroup());
@@ -165,6 +167,7 @@ public class ContactHelper extends HelperBase {
   }
 
   public ContactData infoFromEditForm(ContactData contact) {
+    appManager().goTo().homePage();
     initModificationById(contact.getId());
     String firstName = webDriver().findElement(By.name("firstname")).getAttribute("value");
     String lastName = webDriver().findElement(By.name("lastname")).getAttribute("value");
@@ -189,16 +192,11 @@ public class ContactHelper extends HelperBase {
             .withThirdEmail(thirdEmail);
   }
 
-  public ContactData infoFromDetailsPage(ContactData contact) {
-    openDetailsPageById(contact.getId());
-    return null;
-  }
-
   public void openDetailsPageById(int id) {
     click(By.xpath(".//a[@href='view.php?id=" + id + "']"));
   }
 
-  public String getInfoFromDetails(ContactData contact) {
+  public String infoFromDetailsPage(ContactData contact) {
     openDetailsPageById(contact.getId());
     return webDriver().findElement(By.id("content")).getText();
   }

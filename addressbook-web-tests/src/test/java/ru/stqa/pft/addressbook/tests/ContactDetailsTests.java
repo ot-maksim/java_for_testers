@@ -1,6 +1,5 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
@@ -32,44 +31,43 @@ public class ContactDetailsTests extends TestBase {
   @Test
   public void testContactDetails() {
     ContactData contact = APP_MANAGER.contact().all().iterator().next();
-    String infoFromDetails = APP_MANAGER.contact().getInfoFromDetails(contact);
-    APP_MANAGER.goTo().homePage();
-    ContactData contactInfoFromEditForm = APP_MANAGER.contact().infoFromEditForm(contact);
+    String infoFromDetailsPage = APP_MANAGER.contact().infoFromDetailsPage(contact);
+    ContactData infoFromEditForm = APP_MANAGER.contact().infoFromEditForm(contact);
 
-    if(!contactInfoFromEditForm.getLastName().isEmpty()) {
-      assertThat(infoFromDetails.contains(contactInfoFromEditForm.getLastName()),is(true));
+    if(!infoFromEditForm.getLastName().isEmpty()) {
+      assertThat(infoFromDetailsPage.contains(infoFromEditForm.getLastName()),is(true));
     }
 
-    if(!contactInfoFromEditForm.getFirstName().isEmpty()) {
-      assertThat(infoFromDetails.contains(contactInfoFromEditForm.getFirstName()),is(true));
+    if(!infoFromEditForm.getFirstName().isEmpty()) {
+      assertThat(infoFromDetailsPage.contains(infoFromEditForm.getFirstName()),is(true));
     }
 
-    if(!contactInfoFromEditForm.getFirstAddress().isEmpty()) {
-      assertThat(infoFromDetails.contains(contactInfoFromEditForm.getFirstAddress()),is(true));
+    if(!infoFromEditForm.getFirstAddress().isEmpty()) {
+      assertThat(infoFromDetailsPage.contains(infoFromEditForm.getFirstAddress()),is(true));
     }
 
-    if(!contactInfoFromEditForm.getFirstEmail().isEmpty()) {
-      assertThat(infoFromDetails.contains(contactInfoFromEditForm.getFirstEmail()),is(true));
+    if(!infoFromEditForm.getFirstEmail().isEmpty()) {
+      assertThat(infoFromDetailsPage.contains(infoFromEditForm.getFirstEmail()),is(true));
     }
 
-    if(!contactInfoFromEditForm.getSecondEmail().isEmpty()) {
-      assertThat(infoFromDetails.contains(contactInfoFromEditForm.getSecondEmail()),is(true));
+    if(!infoFromEditForm.getSecondEmail().isEmpty()) {
+      assertThat(infoFromDetailsPage.contains(infoFromEditForm.getSecondEmail()),is(true));
     }
 
-    if(!contactInfoFromEditForm.getThirdEmail().isEmpty()) {
-      assertThat(infoFromDetails.contains(contactInfoFromEditForm.getThirdEmail()),is(true));
+    if(!infoFromEditForm.getThirdEmail().isEmpty()) {
+      assertThat(infoFromDetailsPage.contains(infoFromEditForm.getThirdEmail()),is(true));
     }
 
-    if(!contactInfoFromEditForm.getHomePhone().isEmpty()) {
-      assertThat(infoFromDetails.contains(contactInfoFromEditForm.getHomePhone()),is(true));
+    if(!infoFromEditForm.getHomePhone().isEmpty()) {
+      assertThat(infoFromDetailsPage.contains(infoFromEditForm.getHomePhone()),is(true));
     }
 
-    if(!contactInfoFromEditForm.getMobilePhone().isEmpty()) {
-      assertThat(infoFromDetails.contains(contactInfoFromEditForm.getMobilePhone()),is(true));
+    if(!infoFromEditForm.getMobilePhone().isEmpty()) {
+      assertThat(infoFromDetailsPage.contains(infoFromEditForm.getMobilePhone()),is(true));
     }
 
-    if(!contactInfoFromEditForm.getWorkPhone().isEmpty()) {
-      assertThat(infoFromDetails.contains(contactInfoFromEditForm.getWorkPhone()),is(true));
+    if(!infoFromEditForm.getWorkPhone().isEmpty()) {
+      assertThat(infoFromDetailsPage.contains(infoFromEditForm.getWorkPhone()),is(true));
     }
   }
 }
