@@ -188,4 +188,18 @@ public class ContactHelper extends HelperBase {
             .withSecondEmail(secondEmail)
             .withThirdEmail(thirdEmail);
   }
+
+  public ContactData infoFromDetailsPage(ContactData contact) {
+    openDetailsPageById(contact.getId());
+    return null;
+  }
+
+  public void openDetailsPageById(int id) {
+    click(By.xpath(".//a[@href='view.php?id=" + id + "']"));
+  }
+
+  public String getInfoFromDetails(ContactData contact) {
+    openDetailsPageById(contact.getId());
+    return webDriver().findElement(By.id("content")).getText();
+  }
 }
