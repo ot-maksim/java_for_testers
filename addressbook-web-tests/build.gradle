@@ -1,10 +1,10 @@
 apply plugin: 'java'
 
-repositories{
+repositories {
     mavenCentral()
 }
 
-dependencies{
+dependencies {
     // https://mvnrepository.com/artifact/org.testng/testng
     compile group: 'org.testng', name: 'testng', version: '6.9.10'
 
@@ -16,6 +16,9 @@ dependencies{
 
     // https://mvnrepository.com/artifact/com.beust/jcommander
     compile group: 'com.beust', name: 'jcommander', version: '1.48'
+
+    // https://mvnrepository.com/artifact/com.thoughtworks.xstream/xstream
+    compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.9'
 
 
 }
