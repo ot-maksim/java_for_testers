@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.thoughtworks.xstream.XStream;
 import ru.stqa.pft.addressbook.model.ContactData;
-import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -55,7 +54,21 @@ public class ContactDataGenerator {
 
   private List<ContactData> generateContacts(int count) {
     List<ContactData> contactList = new ArrayList<>();
+//    System.out.println(new File(".").getAbsolutePath());
+//    System.out.println(photo.getAbsolutePath());
     for (int i = 0; i < count; i++) {
+//      ContactData contact = new ContactData()
+//              .withFirstName(String.format("firstName %s", i))
+//              .withLastName(String.format("lastName %s", i))
+//              .withPhoto(new File("src/test/resources/pic.jpg"))
+//              .withFirstAddress(String.format("address %s", i))
+//              .withHomePhone(String.format("123456789 %s", i))
+//              .withMobilePhone(String.format("123456789 %s", i))
+//              .withWorkPhone(String.format("123456789 %s", i))
+//              .withFirstEmail(String.format("firstEmail%s@t.com", i))
+//              .withSecondEmail(String.format("secondEmail%s@t.com", i))
+//              .withThirdEmail(String.format("thirdEmail%s@t.com", i));
+//      contactList.add(contact);
       ContactData contact = new ContactData()
               .withFirstName(String.format("firstName %s", i))
               .withLastName(String.format("lastName %s", i))
@@ -95,6 +108,7 @@ public class ContactDataGenerator {
       writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s\n",
               contact.getFirstName(),
               contact.getLastName(),
+              contact.getPhoto(),
               contact.getFirstAddress(),
               contact.getHomePhone(),
               contact.getMobilePhone(),

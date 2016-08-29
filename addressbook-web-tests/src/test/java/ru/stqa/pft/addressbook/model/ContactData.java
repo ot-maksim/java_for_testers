@@ -31,6 +31,7 @@ public class ContactData {
   private String thirdEmail;
   private String allEmails;
   private String group;
+//  @Expose
   private File photo;
 
   public File getPhoto() {
@@ -38,6 +39,7 @@ public class ContactData {
   }
 
   public ContactData withPhoto(File photo) {
+
     this.photo = photo;
     return this;
   }
