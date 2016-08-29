@@ -16,3 +16,5 @@ gradle-app.setting
 .idea/workspace.xml
 
 addressbook-web-tests/hs_err_pid29862.log
+
+*.log

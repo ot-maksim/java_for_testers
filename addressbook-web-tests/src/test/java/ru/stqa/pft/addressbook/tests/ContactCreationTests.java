@@ -20,6 +20,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTests extends TestBase {
+
   @DataProvider
   public Iterator<Object[]> validGroupsAsXml() throws IOException {
     try (BufferedReader br = new BufferedReader(new FileReader(new File("src/test/resources/contacts.xml")))) {
