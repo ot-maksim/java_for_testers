@@ -9,6 +9,5 @@
     <firstEmail>firstEmail0@t.com</firstEmail>
     <secondEmail>secondEmail0@t.com</secondEmail>
     <thirdEmail>thirdEmail0@t.com</thirdEmail>
-    <photo>src/test/resources/pic.jpg</photo>
   </contact>
 </list>

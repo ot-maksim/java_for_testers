@@ -57,21 +57,10 @@ public class ContactDataGenerator {
 //    System.out.println(new File(".").getAbsolutePath());
 //    System.out.println(photo.getAbsolutePath());
     for (int i = 0; i < count; i++) {
-//      ContactData contact = new ContactData()
-//              .withFirstName(String.format("firstName %s", i))
-//              .withLastName(String.format("lastName %s", i))
-//              .withPhoto(new File("src/test/resources/pic.jpg"))
-//              .withFirstAddress(String.format("address %s", i))
-//              .withHomePhone(String.format("123456789 %s", i))
-//              .withMobilePhone(String.format("123456789 %s", i))
-//              .withWorkPhone(String.format("123456789 %s", i))
-//              .withFirstEmail(String.format("firstEmail%s@t.com", i))
-//              .withSecondEmail(String.format("secondEmail%s@t.com", i))
-//              .withThirdEmail(String.format("thirdEmail%s@t.com", i));
-//      contactList.add(contact);
       ContactData contact = new ContactData()
               .withFirstName(String.format("firstName %s", i))
               .withLastName(String.format("lastName %s", i))
+//              .withPhoto(new File("src/test/resources/pic.jpg"))
               .withFirstAddress(String.format("address %s", i))
               .withHomePhone(String.format("123456789 %s", i))
               .withMobilePhone(String.format("123456789 %s", i))
@@ -87,36 +76,36 @@ public class ContactDataGenerator {
   private void saveAsJson(List<ContactData> contacts, File file) throws IOException {
     Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
     String json = gson.toJson(contacts);
-    Writer writer = new FileWriter(file);
-    writer.write(json);
-    writer.close();
+    try (Writer writer = new FileWriter(file)) {
+      writer.write(json);
+    }
   }
 
   private void saveAsXml(List<ContactData> contacts, File file) throws IOException {
     XStream xStream = new XStream();
     xStream.processAnnotations(ContactData.class);
     String xml = xStream.toXML(contacts);
-    Writer writer = new FileWriter(file);
-    writer.write(xml);
-    writer.close();
+    try (Writer writer = new FileWriter(file)) {
+      writer.write(xml);
+    }
   }
 
   private void saveAsCsv(List<ContactData> contacts, File file) throws IOException {
-    Writer writer = new FileWriter(file);
 
-    for (ContactData contact : contacts) {
-      writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s\n",
-              contact.getFirstName(),
-              contact.getLastName(),
-              contact.getPhoto(),
-              contact.getFirstAddress(),
-              contact.getHomePhone(),
-              contact.getMobilePhone(),
-              contact.getWorkPhone(),
-              contact.getFirstEmail(),
-              contact.getSecondEmail(),
-              contact.getThirdEmail()));
+    try (Writer writer = new FileWriter(file)) {
+      for (ContactData contact : contacts) {
+        writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s\n",
+                contact.getFirstName(),
+                contact.getLastName(),
+//                contact.getPhoto(),
+                contact.getFirstAddress(),
+                contact.getHomePhone(),
+                contact.getMobilePhone(),
+                contact.getWorkPhone(),
+                contact.getFirstEmail(),
+                contact.getSecondEmail(),
+                contact.getThirdEmail()));
+      }
     }
-    writer.close();
   }
 }

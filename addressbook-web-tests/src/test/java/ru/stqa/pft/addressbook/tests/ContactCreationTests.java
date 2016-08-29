@@ -22,32 +22,36 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ContactCreationTests extends TestBase {
   @DataProvider
   public Iterator<Object[]> validGroupsAsXml() throws IOException {
-    BufferedReader br = new BufferedReader(new FileReader(new File("src/test/resources/contacts.xml")));
-    String line;
-    String xml = "";
-    while ((line = br.readLine()) != null) {
-      xml += line;
+    try (BufferedReader br = new BufferedReader(new FileReader(new File("src/test/resources/contacts.xml")))) {
+      String line;
+      String xml = "";
+      while ((line = br.readLine()) != null) {
+        xml += line;
+      }
+      XStream xStream = new XStream();
+      xStream.processAnnotations(ContactData.class);
+      List<ContactData> contacts = (List<ContactData>) xStream.fromXML(xml);
+      return contacts.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
     }
-    XStream xStream = new XStream();
-    xStream.processAnnotations(ContactData.class);
-    List<ContactData> contacts = (List<ContactData>) xStream.fromXML(xml);
-    return contacts.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
   }
 
   @DataProvider
   public Iterator<Object[]> validGroupsAsJson() throws IOException {
-    BufferedReader br = new BufferedReader(new FileReader(new File("src/test/resources/contacts.json")));
-    String line;
-    String json = "";
-    while ((line = br.readLine()) != null) {
-      json += line;
-    }
-    Gson gson = new Gson();
-    List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>() {}.getType()); // List<ContactData>.class
+    try (BufferedReader br = new BufferedReader(new FileReader(new File("src/test/resources/contacts.json")))) {
+      String line;
+      String json = "";
+      while ((line = br.readLine()) != null) {
+        json += line;
+      }
+      Gson gson = new Gson();
+      List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>() {
+      }.getType()); // List<ContactData>.class
 
-    return contacts.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
+      return contacts.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
+    }
   }
-  @Test (dataProvider = "validGroupsAsJson")
+
+  @Test(dataProvider = "validGroupsAsJson")
   public void testContactCreation(ContactData contact) {
     APP_MANAGER.goTo().homePage();
     Contacts before = APP_MANAGER.contact().all();
