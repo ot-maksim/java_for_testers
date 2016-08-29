@@ -1,1 +1,2 @@
-firstName 0;lastName 0;address 0;123456789 0;123456789 0;123456789 0;firstEmail0@t.com;secondEmail0@t.com;thirdEmail0@t.com
+firstName 0;lastName 0;src/test/resources/pic.jpg;address 0;123456789 0;123456789 0;123456789 0;firstEmail0@t.com;secondEmail0@t.com
+firstName 1;lastName 1;src/test/resources/pic.jpg;address 1;123456789 1;123456789 1;123456789 1;firstEmail1@t.com;secondEmail1@t.com

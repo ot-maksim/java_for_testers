@@ -6,6 +6,8 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Created by maksym on 7/25/16.
@@ -38,9 +40,9 @@ public class HelperBase {
     }
   }
 
-  protected void attach(By locator, File file) {
-    if (file != null) {
-        webDriver().findElement(locator).sendKeys(file.getAbsolutePath());
+  protected void attach(By locator, String path) {
+    if (path != null) {
+      webDriver().findElement(locator).sendKeys(Paths.get(path).toAbsolutePath().toString());
     }
   }
 

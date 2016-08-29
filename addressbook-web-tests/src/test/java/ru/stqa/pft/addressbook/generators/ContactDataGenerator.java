@@ -54,13 +54,11 @@ public class ContactDataGenerator {
 
   private List<ContactData> generateContacts(int count) {
     List<ContactData> contactList = new ArrayList<>();
-//    System.out.println(new File(".").getAbsolutePath());
-//    System.out.println(photo.getAbsolutePath());
     for (int i = 0; i < count; i++) {
       ContactData contact = new ContactData()
               .withFirstName(String.format("firstName %s", i))
               .withLastName(String.format("lastName %s", i))
-//              .withPhoto(new File("src/test/resources/pic.jpg"))
+              .withPath("src/test/resources/pic.jpg")
               .withFirstAddress(String.format("address %s", i))
               .withHomePhone(String.format("123456789 %s", i))
               .withMobilePhone(String.format("123456789 %s", i))
@@ -97,7 +95,7 @@ public class ContactDataGenerator {
         writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s\n",
                 contact.getFirstName(),
                 contact.getLastName(),
-//                contact.getPhoto(),
+                contact.getPath(),
                 contact.getFirstAddress(),
                 contact.getHomePhone(),
                 contact.getMobilePhone(),

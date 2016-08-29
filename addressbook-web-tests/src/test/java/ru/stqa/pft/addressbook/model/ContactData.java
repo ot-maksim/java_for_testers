@@ -31,8 +31,18 @@ public class ContactData {
   private String thirdEmail;
   private String allEmails;
   private String group;
-//  @Expose
   private File photo;
+  @Expose
+  private String path;
+
+  public String getPath() {
+    return path;
+  }
+
+  public ContactData withPath(String path) {
+    this.path = path;
+    return this;
+  }
 
   public File getPhoto() {
     return photo;

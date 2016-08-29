@@ -9,5 +9,18 @@
     <firstEmail>firstEmail0@t.com</firstEmail>
     <secondEmail>secondEmail0@t.com</secondEmail>
     <thirdEmail>thirdEmail0@t.com</thirdEmail>
+    <path>src/test/resources/pic.jpg</path>
+  </contact>
+  <contact>
+    <firstName>firstName 1</firstName>
+    <lastName>lastName 1</lastName>
+    <firstAddress>address 1</firstAddress>
+    <homePhone>123456789 1</homePhone>
+    <mobilePhone>123456789 1</mobilePhone>
+    <workPhone>123456789 1</workPhone>
+    <firstEmail>firstEmail1@t.com</firstEmail>
+    <secondEmail>secondEmail1@t.com</secondEmail>
+    <thirdEmail>thirdEmail1@t.com</thirdEmail>
+    <path>src/test/resources/pic.jpg</path>
   </contact>
 </list>
