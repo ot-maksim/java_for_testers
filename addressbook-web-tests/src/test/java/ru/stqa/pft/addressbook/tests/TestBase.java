@@ -17,7 +17,7 @@ import java.util.Arrays;
  */
 public class TestBase {
 
-  Logger log = LoggerFactory.getLogger(GroupCreationTests.class);
+  private Logger log = LoggerFactory.getLogger(GroupCreationTests.class);
 
   protected static final ApplicationManager APP_MANAGER = new ApplicationManager(System.getProperty("browser", BrowserType.FIREFOX));
 
@@ -31,7 +31,7 @@ public class TestBase {
     APP_MANAGER.stop();
   }
 
-  @BeforeMethod
+  @BeforeMethod (alwaysRun = true)
   public void logTestStart(Method method, Object[] parameters) {
     log.info("Start test " + method.getName() + " with parameters " + Arrays.asList(parameters));
   }
