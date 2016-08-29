@@ -1,0 +1,14 @@
+<list>
+  <contact>
+    <firstName>firstName 0</firstName>
+    <lastName>lastName 0</lastName>
+    <firstAddress>address 0</firstAddress>
+    <homePhone>123456789 0</homePhone>
+    <mobilePhone>123456789 0</mobilePhone>
+    <workPhone>123456789 0</workPhone>
+    <firstEmail>firstEmail0@t.com</firstEmail>
+    <secondEmail>secondEmail0@t.com</secondEmail>
+    <thirdEmail>thirdEmail0@t.com</thirdEmail>
+    <photo>src/test/resources/pic.jpg</photo>
+  </contact>
+</list>

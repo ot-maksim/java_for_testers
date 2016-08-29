@@ -1,0 +1,13 @@
+[
+  {
+    "firstName": "firstName 0",
+    "lastName": "lastName 0",
+    "firstAddress": "address 0",
+    "homePhone": "123456789 0",
+    "mobilePhone": "123456789 0",
+    "workPhone": "123456789 0",
+    "firstEmail": "firstEmail0@t.com",
+    "secondEmail": "secondEmail0@t.com",
+    "thirdEmail": "thirdEmail0@t.com"
+  }
+]
