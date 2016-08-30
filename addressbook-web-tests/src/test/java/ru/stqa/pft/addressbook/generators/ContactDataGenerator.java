@@ -41,14 +41,18 @@ public class ContactDataGenerator {
   private void run() throws IOException {
     List<ContactData> contacts = generateContacts(count);
 
-    if (format.equals("csv")) {
+    if ("csv".equals(format)) {
       saveAsCsv(contacts, new File(file));
-    } else if (format.equals("xml")) {
+    } else if ("xml".equals(format)) {
       saveAsXml(contacts, new File(file));
-    } else if (format.equals("json")) {
+    } else if ("json".equals(format)) {
       saveAsJson(contacts, new File(file));
     } else {
-      System.out.println("Unrecognized format " + format);
+      if (format != null) {
+        System.out.println("Unrecognized format " + format);
+      } else {
+        System.out.println("Provide parameters to generate test data");
+      }
     }
   }
 
