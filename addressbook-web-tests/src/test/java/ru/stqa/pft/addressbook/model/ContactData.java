@@ -6,7 +6,6 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.io.File;
 
 @XStreamAlias("contact")
 @Entity
@@ -19,31 +18,31 @@ public class ContactData {
 
   @Expose
   @Column(name = "firstname")
-  private String firstName;
+  private String firstName = "";
 
   @Expose
   @Column(name = "lastname")
-  private String lastName;
+  private String lastName = "";
 
   @Expose
   @Column(name = "address")
   @Type(type = "text")
-  private String firstAddress;
+  private String firstAddress = "";
 
   @Expose
   @Column(name = "home")
   @Type(type = "text")
-  private String homePhone;
+  private String homePhone = "";
 
   @Expose
   @Column(name = "mobile")
   @Type(type = "text")
-  private String mobilePhone;
+  private String mobilePhone = "";
 
   @Expose
   @Column(name = "work")
   @Type(type = "text")
-  private String workPhone;
+  private String workPhone = "";
 
   @Transient
   private String allPhones;
@@ -51,17 +50,17 @@ public class ContactData {
   @Expose
   @Column(name = "email")
   @Type(type = "text")
-  private String firstEmail;
+  private String firstEmail = "";
 
   @Expose
   @Column(name = "email2")
   @Type(type = "text")
-  private String secondEmail;
+  private String secondEmail = "";
 
   @Expose
   @Column(name = "email3")
   @Type(type = "text")
-  private String thirdEmail;
+  private String thirdEmail = "";
 
   @Transient
   private String allEmails;
@@ -69,12 +68,10 @@ public class ContactData {
   @Transient
   private String group;
 
-//  private File photo;
-
   @Expose
   @Column(name = "photo")
   @Type(type = "text")
-  private String path;
+  private String path = "";
 
   public String getPath() {
     return path;
@@ -84,16 +81,6 @@ public class ContactData {
     this.path = path;
     return this;
   }
-
-//  public File getPhoto() {
-//    return photo;
-//  }
-//
-//  public ContactData withPhoto(File photo) {
-//
-//    this.photo = photo;
-//    return this;
-//  }
 
   public String getFirstName() {
     return firstName;
@@ -213,16 +200,6 @@ public class ContactData {
     return this;
   }
 
-
-  @Override
-  public String toString() {
-    return "ContactData{" +
-            "firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", id=" + id +
-            '}';
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -232,15 +209,46 @@ public class ContactData {
 
     if (id != that.id) return false;
     if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
-    return lastName != null ? lastName.equals(that.lastName) : that.lastName == null;
+    if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
+    if (firstAddress != null ? !firstAddress.equals(that.firstAddress) : that.firstAddress != null) return false;
+    if (homePhone != null ? !homePhone.equals(that.homePhone) : that.homePhone != null) return false;
+    if (mobilePhone != null ? !mobilePhone.equals(that.mobilePhone) : that.mobilePhone != null) return false;
+    if (workPhone != null ? !workPhone.equals(that.workPhone) : that.workPhone != null) return false;
+    if (firstEmail != null ? !firstEmail.equals(that.firstEmail) : that.firstEmail != null) return false;
+    if (secondEmail != null ? !secondEmail.equals(that.secondEmail) : that.secondEmail != null) return false;
+    return thirdEmail != null ? thirdEmail.equals(that.thirdEmail) : that.thirdEmail == null;
 
   }
 
   @Override
   public int hashCode() {
-    int result = firstName != null ? firstName.hashCode() : 0;
+    int result = id;
+    result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
     result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-    result = 31 * result + id;
+    result = 31 * result + (firstAddress != null ? firstAddress.hashCode() : 0);
+    result = 31 * result + (homePhone != null ? homePhone.hashCode() : 0);
+    result = 31 * result + (mobilePhone != null ? mobilePhone.hashCode() : 0);
+    result = 31 * result + (workPhone != null ? workPhone.hashCode() : 0);
+    result = 31 * result + (firstEmail != null ? firstEmail.hashCode() : 0);
+    result = 31 * result + (secondEmail != null ? secondEmail.hashCode() : 0);
+    result = 31 * result + (thirdEmail != null ? thirdEmail.hashCode() : 0);
     return result;
   }
+
+  @Override
+  public String toString() {
+    return "ContactData{" +
+            "id=" + id +
+            ", firstName='" + firstName + '\'' +
+            ", lastName='" + lastName + '\'' +
+            ", firstAddress='" + firstAddress + '\'' +
+            ", homePhone='" + homePhone + '\'' +
+            ", mobilePhone='" + mobilePhone + '\'' +
+            ", workPhone='" + workPhone + '\'' +
+            ", firstEmail='" + firstEmail + '\'' +
+            ", secondEmail='" + secondEmail + '\'' +
+            ", thirdEmail='" + thirdEmail + '\'' +
+            '}';
+  }
+
 }

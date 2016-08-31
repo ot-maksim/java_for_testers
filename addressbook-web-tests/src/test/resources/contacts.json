@@ -10,17 +10,5 @@
     "secondEmail": "secondEmail0@t.com",
     "thirdEmail": "thirdEmail0@t.com",
     "path": "src/test/resources/pic.jpg"
-  },
-  {
-    "firstName": "firstName 1",
-    "lastName": "lastName 1",
-    "firstAddress": "address 1",
-    "homePhone": "123456789 1",
-    "mobilePhone": "123456789 1",
-    "workPhone": "123456789 1",
-    "firstEmail": "firstEmail1@t.com",
-    "secondEmail": "secondEmail1@t.com",
-    "thirdEmail": "thirdEmail1@t.com",
-    "path": "src/test/resources/pic.jpg"
   }
 ]

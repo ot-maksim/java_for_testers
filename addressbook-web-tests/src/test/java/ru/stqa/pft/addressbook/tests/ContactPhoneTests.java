@@ -18,8 +18,8 @@ public class ContactPhoneTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions() {
-    APP_MANAGER.goTo().homePage();
-    if (APP_MANAGER.contact().all().size() == 0) {
+    if (APP_MANAGER.db().contacts().size() == 0) {
+      APP_MANAGER.goTo().homePage();
       APP_MANAGER.contact().create(new ContactData()
               .withFirstName("firstName1")
               .withLastName("lastName1")

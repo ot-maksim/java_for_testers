@@ -18,3 +18,5 @@ gradle-app.setting
 addressbook-web-tests/hs_err_pid29862.log
 
 *.log
+
+.DS_Store
