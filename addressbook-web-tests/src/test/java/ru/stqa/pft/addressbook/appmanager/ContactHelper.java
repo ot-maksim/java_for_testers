@@ -39,7 +39,7 @@ public class ContactHelper extends HelperBase {
     if (!contactData.getPath().equals("")) {
       attach(By.name("photo"), contactData.getPath());
     }
-    
+
     if (isContactCreation) {
       if (contactData.getGroups().size() > 0) {
         Assert.assertTrue(contactData.getGroups().size() == 1);
