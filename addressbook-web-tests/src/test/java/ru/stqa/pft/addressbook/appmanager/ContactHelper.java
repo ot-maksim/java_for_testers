@@ -39,18 +39,12 @@ public class ContactHelper extends HelperBase {
     if (!contactData.getPath().equals("")) {
       attach(By.name("photo"), contactData.getPath());
     }
-
+    
     if (isContactCreation) {
-      try {
-        if (contactData.getGroup() != null) {
-          new Select(webDriver().findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-        }
-      } catch (NoSuchElementException ex) {
-        appManager().goTo().groupPage();
-        GroupData group = new GroupData().withName(contactData.getGroup());
-        appManager().group().create(group);
-        initCreation();
-        new Select(webDriver().findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+      if (contactData.getGroups().size() > 0) {
+        Assert.assertTrue(contactData.getGroups().size() == 1);
+        new Select(webDriver().findElement(By.name("new_group")))
+                .selectByVisibleText(contactData.getGroups().iterator().next().getName());
       }
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")), "group selection element should NOT exist on contact modification form");

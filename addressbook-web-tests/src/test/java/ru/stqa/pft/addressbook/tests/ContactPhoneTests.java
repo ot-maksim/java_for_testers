@@ -26,7 +26,7 @@ public class ContactPhoneTests extends TestBase {
               .withFirstAddress("address1")
               .withHomePhone("123456789")
               .withFirstEmail("email1@t.com")
-              .withGroup("test1")
+//              .withGroup("test1")
               .withHomePhone("111")
               .withMobilePhone("222")
               .withWorkPhone("333"));
