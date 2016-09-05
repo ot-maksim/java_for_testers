@@ -41,10 +41,22 @@ public class DbHelper {
     Session session = sessionFactory.openSession();
     session.beginTransaction();
     List result = session.createQuery( "from ContactData where deprecated = '0000-00-00'").list();
-    ((List<ContactData>) result).forEach(System.out::println);
+//    ((List<ContactData>) result).forEach(System.out::println);
     session.getTransaction().commit();
     session.close();
 
     return new Contacts(result);
+  }
+
+  public Groups contactGroups(ContactData contact) {
+    Session session = sessionFactory.openSession();
+    session.beginTransaction();
+    ContactData resultContact = (ContactData) session
+            .createQuery("from ContactData where id =" + contact.getId()).uniqueResult();
+
+    session.getTransaction().commit();
+    session.close();
+
+    return resultContact.getGroups();
   }
 }

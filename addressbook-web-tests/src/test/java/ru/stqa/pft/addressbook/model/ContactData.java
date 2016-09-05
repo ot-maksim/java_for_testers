@@ -67,18 +67,6 @@ public class ContactData {
   @Transient
   private String allEmails;
 
-//  @Transient
-//  private String group;
-
-//  public String getGroup() {
-//    return group;
-//  }
-//
-//  public ContactData withGroup(String group) {
-//    this.group = group;
-//    return this;
-//  }
-
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "address_in_groups", joinColumns = @JoinColumn(name = "id"),
           inverseJoinColumns = @JoinColumn(name = "group_id"))

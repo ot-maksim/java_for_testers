@@ -1,7 +1,6 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -94,8 +93,9 @@ public class ContactHelper extends HelperBase {
     click(By.xpath(".//*[@id='content']/div/i/a[1]"));
   }
 
-  public void selectById(int id) {
+  public ContactHelper selectContactById(int id) {
     click(By.xpath(".//input[@id='" + id + "']"));
+    return this;
   }
 
   public void submitDeletion() {
@@ -121,7 +121,7 @@ public class ContactHelper extends HelperBase {
   }
 
   public void delete(ContactData contact) {
-    selectById(contact.getId());
+    selectContactById(contact.getId());
     submitDeletion();
     acceptDeletion();
     appManager().goTo().homePage();
@@ -198,5 +198,26 @@ public class ContactHelper extends HelperBase {
   public String infoFromDetailsPage(ContactData contact) {
     openDetailsPageById(contact.getId());
     return webDriver().findElement(By.id("content")).getText();
+  }
+
+  public ContactHelper selectGroupById(int id) {
+    new Select(webDriver().findElement(By.name("to_group"))).selectByValue(String.valueOf(id));
+    return this;
+  }
+
+  public void addToGroup() {
+    webDriver().findElement(By.name("add")).click();
+  }
+
+  public ContactHelper filterGroups(GroupData group) {
+    new Select(webDriver()
+            .findElement(By.xpath(".//form[@id='right']/select[@name='group']")))
+            .selectByValue(String.valueOf(group.getId()));
+    return this;
+  }
+
+  public ContactHelper removeContactFromGroup() {
+    click(By.xpath(".//*[@id='content']//input[@name='remove']"));
+    return this;
   }
 }
