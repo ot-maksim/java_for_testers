@@ -1,7 +1,7 @@
 package ru.stqa.pft.mantis.tests;
 
 import org.testng.annotations.Test;
-import ru.stqa.pft.mantis.appmanager.HttpSession;
+import ru.stqa.pft.mantis.appmanager.HttpSessionHelper;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ public class LoginHttpTests extends TestBase {
 
   @Test
   public void testLogin() throws IOException {
-    HttpSession session = APP_MANAGER.newSession();
+    HttpSessionHelper session = APP_MANAGER.newSession();
     boolean actual = session.login("administrator", "qwerty");
     assertThat(actual, is(true));
     assertThat(session.isLoggedInAs("administrator"),is(true));
