@@ -18,10 +18,10 @@ public class FtpHelper {
     ftp = new FTPClient();
   }
 
-  public void upload(File file, String target, String backup) throws IOException {
+  public void upload(File file, String subDir, String target, String backup) throws IOException {
     ftp.connect(appManager.getProperty("ftp.host"));
     ftp.login(appManager.getProperty("ftp.login"), appManager.getProperty("ftp.password"));
-    String workDir = ftp.printWorkingDirectory() + "/Sites/mantisbt-1.3.1/config/";
+    String workDir = ftp.printWorkingDirectory() + "/" + subDir;
     ftp.changeWorkingDirectory(workDir);
     ftp.deleteFile(backup);
     ftp.rename(target, backup);
@@ -30,10 +30,10 @@ public class FtpHelper {
     ftp.disconnect();
   }
 
-  public void restore(String backup, String target) throws IOException {
+  public void restore(String subDir, String backup, String target) throws IOException {
     ftp.connect(appManager.getProperty("ftp.host"));
     ftp.login(appManager.getProperty("ftp.login"), appManager.getProperty("ftp.password"));
-    String workDir = ftp.printWorkingDirectory() + "/Sites/mantisbt-1.3.1/config/";
+    String workDir = ftp.printWorkingDirectory() + "/" + subDir;
     ftp.changeWorkingDirectory(workDir);
     ftp.deleteFile(target);
     ftp.rename(backup, target);

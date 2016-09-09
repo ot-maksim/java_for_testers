@@ -19,12 +19,12 @@ public class TestBase {
   @BeforeSuite
   public void setUp() throws Exception {
     APP_MANAGER.init();
-    APP_MANAGER.ftp().upload(new File("src/test/resources/config_inc.php"), "config_inc.php", "config_inc.php.bak");
+    APP_MANAGER.ftp().upload(new File("src/test/resources/config_inc.php"), "Sites/mantisbt-1.3.1/config/", "config_inc.php", "config_inc.php.bak");
   }
 
   @AfterSuite(alwaysRun = true)
   public void tearDown() throws IOException {
-    APP_MANAGER.ftp().restore("config_inc.php.bak", "config_inc.php");
+    APP_MANAGER.ftp().restore("Sites/mantisbt-1.3.1/config/", "config_inc.php.bak", "config_inc.php");
     APP_MANAGER.stop();
   }
 
