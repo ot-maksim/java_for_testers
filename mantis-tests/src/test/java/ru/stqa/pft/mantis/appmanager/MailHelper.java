@@ -37,11 +37,10 @@ public class MailHelper extends HelperBase {
     throw new Error("No mail :(");
   }
 
-  public static MailMessage toModelMail(WiserMessage message) {
+  private static MailMessage toModelMail(WiserMessage message) {
     try {
       MimeMessage mm = message.getMimeMessage();
       return new MailMessage(mm.getAllRecipients()[0].toString(), (String) mm.getContent());
-
     } catch (MessagingException ex) {
       ex.printStackTrace();
       return null;
