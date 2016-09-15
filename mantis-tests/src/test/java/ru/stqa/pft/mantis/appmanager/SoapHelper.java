@@ -18,15 +18,17 @@ import java.util.stream.Collectors;
  */
 public class SoapHelper {
   private final ApplicationManager appManager;
+  private String login;
+  private String password;
 
   public SoapHelper(ApplicationManager appManager) {
     this.appManager = appManager;
+    login = appManager.getProperty("web.adminLogin");
+    password = appManager.getProperty("web.adminPassword");
   }
 
   public Set<Project> getProjects() throws MalformedURLException, ServiceException, RemoteException {
     MantisConnectPortType mantisConnection = getMantisConnect();
-    String login = appManager.getProperty("web.adminLogin");
-    String password = appManager.getProperty("web.adminPassword");
 
     ProjectData[] projects = mantisConnection.mc_projects_get_user_accessible(login, password);
 
@@ -36,16 +38,8 @@ public class SoapHelper {
             .collect(Collectors.toSet());
   }
 
-  private MantisConnectPortType getMantisConnect() throws ServiceException, MalformedURLException {
-    String soapURL = appManager.getProperty("soap.url");
-    return new MantisConnectLocator()
-            .getMantisConnectPort(new URL(soapURL));
-  }
-
   public Issue addIssue(Issue issue) throws MalformedURLException, ServiceException, RemoteException {
     MantisConnectPortType mantisConnection = getMantisConnect();
-    String login = appManager.getProperty("web.adminLogin");
-    String password = appManager.getProperty("web.adminPassword");
     String[] categories = mantisConnection.
             mc_project_get_categories(login, password, BigInteger.valueOf(issue.getProject().getId()));
     IssueData issueData = new IssueData();
@@ -67,5 +61,17 @@ public class SoapHelper {
             .withProject(new Project()
                     .withId(createdIssueData.getProject().getId().intValue())
                     .withName(createdIssueData.getProject().getName()));
+  }
+
+  public IssueData getIssueById(int issueId) throws MalformedURLException, ServiceException, RemoteException {
+    MantisConnectPortType mantisConnection = getMantisConnect();
+    return mantisConnection.mc_issue_get(login, password, BigInteger.valueOf(issueId));
+
+  }
+
+  private MantisConnectPortType getMantisConnect() throws ServiceException, MalformedURLException {
+    String soapURL = appManager.getProperty("soap.url");
+    return new MantisConnectLocator()
+            .getMantisConnectPort(new URL(soapURL));
   }
 }
