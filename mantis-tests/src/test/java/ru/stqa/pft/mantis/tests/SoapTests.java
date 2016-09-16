@@ -38,7 +38,7 @@ public class SoapTests extends TestBase {
 
   @Test
   public void testResolutionOfTest() throws RemoteException, ServiceException, MalformedURLException {
-    skipIfNotFixed(0000005);
+    skipIfNotFixed(0000002);
     System.out.println("test takes place");
   }
 }

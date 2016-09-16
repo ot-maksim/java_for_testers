@@ -27,7 +27,7 @@ public class TestBase {
   private boolean isIssueOpen(int issueId) throws RemoteException, ServiceException, MalformedURLException {
     IssueData issueById = APP_MANAGER.soap().getIssueById(issueId);
     int resolutionId = issueById.getResolution().getId().intValue();
-    return ! Objects.equals(resolutionId, 20);
+    return resolutionId != 20;
   }
 
   void skipIfNotFixed(int issueId) throws RemoteException, ServiceException, MalformedURLException {
