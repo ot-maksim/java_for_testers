@@ -8,10 +8,13 @@ import com.jayway.restassured.RestAssured;
 import org.apache.http.client.fluent.Executor;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.message.BasicNameValuePair;
+import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.rmi.RemoteException;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -37,6 +40,12 @@ public class RestAssuredTests {
 
   }
 
+  @Test
+  public void testSkipTestIfBugNotClosed () {
+    skipIfNotFixed(9);
+    System.out.println("test takes place");
+  }
+
   private int createIssue(Issue newIssue) throws IOException {
     String json = RestAssured.given()
             .parameter("subject", newIssue.getSubject())
@@ -54,5 +63,27 @@ public class RestAssuredTests {
     JsonElement issues = parsed.getAsJsonObject().get("issues");
 
     return new Gson().fromJson(issues, new TypeToken<Set<Issue>>() {}.getType());
+  }
+
+  private boolean isIssueOpen(int issueId) {
+    String issueStatus = getIssueStatus(issueId);
+    return ! issueStatus.equalsIgnoreCase("closed");
+  }
+
+  private void skipIfNotFixed(int issueId) {
+    if (isIssueOpen(issueId)) {
+      throw new SkipException("Ignored because of issue " + issueId);
+    }
+  }
+
+  private String getIssueStatus(int issueId) {
+    String json = RestAssured.given()
+    .get(String.format("http://demo.bugify.com/api/issues/%s.json", issueId)).asString();
+
+    JsonElement parsed = new JsonParser().parse(json);
+    JsonElement issues = parsed.getAsJsonObject().get("issues");
+    Set<Issue> issue = new Gson().fromJson(issues, new TypeToken<Set<Issue>>() {}.getType());
+
+    return issue.iterator().next().getState();
   }
 }
